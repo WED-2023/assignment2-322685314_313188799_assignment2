@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galaxa NR</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="logo.jpeg" alt="Logo" id="logo" />
+    <h1>Galaxa NR</h1>
+  </header>
+
+  <!-- MENU -->
+  <nav>
+    <button onclick="showScreen('welcome')">Welcome</button>
+    <button onclick="showScreen('register')">Register</button>
+    <button onclick="showScreen('login')">Login</button>
+    <button onclick="openAbout()">About</button>
+  </nav>
+
+  <!-- CONTENT -->
+  <main>
+    <div id="welcome" class="screen">
+      <h2>Welcome to Galaxa NR!</h2>
+      <p>Name: Ravit Cohen | ID: 313188799</p>
+      <p>Name: Natalie Mirelashvili| ID: 322685314</p>
+      <button onclick="showScreen('register')">Register</button>
+      <button onclick="showScreen('login')">Login</button>
+    </div>
+
+    <div id="register" class="screen hidden">
+      <h2>Register</h2>
+      <form id="registerForm" onsubmit="return validateRegistration()">
+        <input type="text" placeholder="Username" id="regUser" required />
+        <input type="password" placeholder="Password" id="regPass" required />
+        <input type="password" placeholder="Confirm Password" id="regConfirm" required />
+        <input type="text" placeholder="First Name" id="firstName" required />
+        <input type="text" placeholder="Last Name" id="lastName" required />
+        <input type="email" placeholder="Email" id="email" required />
+        <label>Date of Birth:</label>
+        <div class="birth-row" style="display: flex; justify-content: center; gap: 10px;">
+          <div>
+            <small>Day</small>
+            <select id="birthDay"></select>
+          </div>
+          <div>
+            <small>Month</small>
+            <select id="birthMonth"></select>
+          </div>
+          <div>
+            <small>Year</small>
+            <select id="birthYear"></select>
+          </div>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div id="login" class="screen hidden">
+      <h2>Login</h2>
+      <input type="text" placeholder="Username" id="loginUser" />
+      <input type="password" placeholder="Password" id="loginPass" />
+      <button onclick="login()">Login</button>
+      <p id="loginError" class="error"></p>
+    </div>
+
+    <div id="game" class="screen hidden">
+      <h2>Welcome to the Game!</h2>
+      <p>Your game will appear here.</p>
+    </div>
+  </main>
+
+  <!-- ABOUT -->
+  <div id="aboutModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeAbout()">&times;</span>
+      <h2>About This Project</h2>
+      <p><strong>Submitted by:</strong> Ravit Cohen & Natalie Mirelashvili</p>
+      <p><strong>Template used:</strong> !!!complete!!!</p>
+      <p><strong>jQuery plugin used:</strong> !!!complete!!!</p>
+      <p><strong>Challenges:</strong></p>
+      <ul>
+        <li>!!!complete!!!</li>
+      </ul>
+    </div>
+  </div>  
+  
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 - Galaxa NR | Contact: cravi@post.bgu.ac.il , miralshv@post.bgu.ac.il</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+html, body {
+  min-width: 1366px;
+  min-height: 768px;
+  overflow-x: auto;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  padding-top: 60px;  
+  background-image: url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #ffffff;
+  min-width: 1366px;
+  min-height: 768px;
+}
+
+header {
+  background-color: transparent;
+  color: #66ccff;
+  padding: 1.2em;
+  text-align: center;
+  font-size: 1.5em;
+  text-shadow: 0 0 5px #3399cc;
+}
+
+#logo {
+  width: 160px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 10px 0;
+  backdrop-filter: blur(6px);
+}
+
+
+nav button {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #66ccff;
+  padding: 12px 18px;
+  border: 1px solid #005577;
+  margin: 0 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s;
+}
+
+nav button:hover {
+  background-color: rgba(0, 85, 119, 0.4);
+  color: #ffffff;
+  box-shadow: 0 0 10px #3399cc;
+}
+
+main {
+  padding: 20px;
+  min-height: calc(768px - 200px);
+}
+
+.screen {
+  display: none;
+}
+
+.screen:not(.hidden) {
+  display: block;
+  padding: 20px;
+  margin: auto;
+  max-width: 600px;
+  text-align: center;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 15px #00ffff;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+input, select, button {
+  display: block;
+  margin: 12px auto;
+  padding: 12px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 1px solid #005577;
+  font-size: 1em;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #66ccff;
+}
+
+input::placeholder {
+  color: #99ddff;
+}
+
+button {
+  background-color: #66ccff;
+  color: #000;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #3399cc;
+  color: #000;
+}
+
+label, .birth-row small {
+  color: #66ccff;
+  font-weight: normal;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background-color: rgba(0, 0, 30, 0.95);
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px #00ffff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 500px;
+  color: #66ccff;
+  text-align: center;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #00ffff;
+  font-size: 1.8em;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.modal-content li::before {
+  content: "🚀 ";
+  margin-right: 5px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #66ccff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  color: white;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  background-color: transparent;
+  color: #66ccff;
+  text-align: center;
+  padding: 1em;
+  font-size: 0.9em;
+  text-shadow: 0 0 8px #3399cc;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.error {
+  color: #ff5555;
+  text-align: center;
+  font-weight: bold;
+}
