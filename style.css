@@ -119,6 +119,12 @@ label, .birth-row small {
   color: #66ccff;
   font-weight: normal;
 }
+
+select {
+  min-width: 80px;
+}
+
+
 .modal {
   position: fixed;
   top: 0;
