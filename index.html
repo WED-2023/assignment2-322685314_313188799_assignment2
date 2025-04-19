@@ -21,6 +21,7 @@
     <button onclick="showScreen('register')">Register</button>
     <button onclick="showScreen('login')">Login</button>
     <button onclick="openAbout()">About</button>
+    <button onclick="showScreen('game')">Enter Game (Dev Test)</button>
   </nav>
 
   <!-- CONTENT -->
@@ -71,7 +72,31 @@
 
     <div id="game" class="screen hidden">
       <h2>Welcome to the Game!</h2>
-      <p>Your game will appear here.</p>
+      <p> 
+        <audio id="loseSound" scr="Sounds\lose.mp3"></audio>
+        <audio id="hitSound" scr="Sounds\hit.mp3"></audio>
+        <audio id="backgroundSound" scr="Sounds\background.mp3"></audio>
+
+        <canvas id = "theCanvas" width = "900" height = "800"></canvas> 
+
+        <div id="endScreen" style="display: none;">
+          <div id="endContent">
+            <h2 id="endMessage"></h2>
+            <p id="endScore"></p>
+            <button onclick="restartGame()">Restart</button>
+          </div>
+        </div>
+
+        <div id="highScores"></div>
+      
+      
+      
+      
+      
+  
+      
+      
+      </p>
     </div>
   </main>
 
@@ -95,5 +120,16 @@
     <p>© 2025 - Galaxa NR | Contact: cravi@post.bgu.ac.il , miralshv@post.bgu.ac.il</p>
   </footer>
 
+
+
+  <!--Configuration
+   For user's ship selection
+  <div id="spaceship-selection">
+    <h1>Choose Your Spaceship:</h1>
+    <img src="images\MainShips\MainShipOpt1.png" alt="SHIP1" class="spaceship-option" data-path="images\MainShips\MainShipOpt1.png">
+    <img src="images\MainShips\MainShipOpt2.png" alt="SHIP2" class="spaceship-option" data-path="images\MainShips\MainShipOpt2.png">
+    <img src="images\MainShips\MainShipOpt3.png" alt="SHIP3" class="spaceship-option" data-path="images\MainShips\MainShipOpt3.png">
+    <img src="images\MainShips\MainShipOpt4.png" alt="SHIP4" class="spaceship-option" data-path="images\MainShips\MainShipOpt4.png">
+  </div> -->
 </body>
 </html>
