@@ -76,7 +76,7 @@ main {
 
 .screen:not(.hidden) {
   display: block;
-  padding: 20px;
+  padding: 60px;
   margin: auto;
   max-width: 600px;
   text-align: center;
@@ -249,3 +249,45 @@ footer {
   font-size: 18px;
   cursor: pointer;
 }
+
+#game.screen:not(.hidden) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  overflow: hidden;
+  margin: auto;
+}
+
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+}
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+#theCanvas {
+  max-height: 80vh; /* הגבלת הגובה המרבי של הקנבס עצמו */
+  max-width: 100%; /* הגבלת הרוחב המרבי */
+  height: auto; /* אפשר לקנבס להתאים את עצמו */
+  aspect-ratio: 9/8; /* שמירה על יחס הצדדים */
+}
+/* Media query עבור מסכים קטנים יותר */
+@media (max-width: 950px) {
+  #theCanvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 9/8;
+  }
+}
+
