@@ -477,18 +477,43 @@ function endGame(reason) {
     document.getElementById("endScreen").style.display = "flex";
   }
 
-function restartGame() {
-  document.getElementById("endScreen").style.display = "none";
-  location.reload(); // reloading page 
-}
-
-  // // Let user pick a ship:
-  // let selectedSpaceship = null;
-  // document.querySelector('.spaceship-option').forEach(img => {
-  //   img.addEventListener('click', () => {
-  //     document.querySelectorAll('.spaceship-option').forEach(i => i.classList.remove('selected'));
-  //     img.classList.add('selected');
-  //     selectedSpaceship = img.dataset.path;
-  //   });
-  // });
-  // MainSpaceshipImg.src = selectedSpaceship;
+  function restartGame() {
+    // Hide end screen
+    document.getElementById("endScreen").style.display = "none";
+    
+    // Reset game variables
+    playerLives = 3;
+    playerCurrentScore = 0;
+    timeLeft = 60;
+    timeElapsed = 0;
+    
+    // Reset enemy arrays
+    enemies.length = 0;
+    enemyBullets.length = 0;
+    playerBullets.length = 0;
+    
+    // Reset enemy movement variables
+    enemyDirection = 1;
+    enemyYDirection = 1;
+    enemyYTick = 0;
+    enemySpeed = 5;
+    accelerationCount = 0;
+    
+    // Reset player position
+    resetPlayerShip();
+    
+    // Clear any existing timers
+    clearInterval(intervalTimer);
+    
+    // Cancel any existing animation frame
+    if (GameLoopId) {
+      cancelAnimationFrame(GameLoopId);
+    }
+    
+    // Rebuild the game
+    setupGame();
+    startGameTimer();
+    startEnemyAcceleration();
+    GameLoop();
+  }
+  
