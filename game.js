@@ -6,7 +6,7 @@ var context; // used for drawing on the canvas
 
 // constants for game play
 var playerLives = 3; // number of nullification
-var playerScore = 0; 
+var playerCurrentScore = 0; 
 const HIT_FIRST_REWARD = 20; // points added on a hit
 const HIT_SECOND_REWARD = 15; // points added on a hit
 const HIT_THIRD_REWARD = 10; // points added on a hit
@@ -27,13 +27,16 @@ const playerBulletSpeed = 5; // enemy's bullet speed should match the current en
 const HitTargetSound = document.getElementById( "hitSound" );
 const NullificationSound = document.getElementById( "loseSound" );
 
-let currentPlayerName = window.getElementById("regUser");
+// put this in proper register file
+const username = window.getElementById('regUser');
+sessionStorage.setItem($`{username}`); 
+// let currentPlayerName = window.getElementById("regUser");
+
 function saveScore() { 
-    // Set username:[name] in local storage (client side small storage)
-    const username = sessionStorage.setItem($`{currentPlayerName}`);
-    const store_key = currentPlayerName;
-    let scores = JSON.parse(localStorage.getItem(key)) || [];
-  
+// Dynamiclly get current username from session key = username, value = [user-score]
+    const userName = sessionStorage.getItem($`{username}`)
+    let scores = JSON.parse(localStorage.getItem()) || [];
+    
     scores.push(score);
     scores.sort((a, b) => b - a);
     scores = scores.slice(0, 10);
@@ -154,7 +157,7 @@ function drawEverything() {
   // Draw playe's current score
   context.fillStyle = "white";
   context.font = "20px Arial";
-  context.fillText("Score: " + playerScore, 10, 15);
+  context.fillText("Score: " + playerCurrentScore, 10, 15);
    // Draw playe's current lifes
    context.fillStyle = "white";
    context.font = "20px Arial";
@@ -346,7 +349,7 @@ function updatePlayerBullets() {
           default:
             continue; // illegal type
         }
-        playerScore += reward;
+        playerCurrentScore += reward;
         break;
       }
     }
@@ -451,7 +454,7 @@ function endGame(reason) {
   if (reason === "lives") {
     message = "You Lost!";
   } else if (reason === "time") {
-    if (playerScore < 100) {
+    if (playerCurrentScore < 100) {
       message = "You can do better";
     } else {
       message = "Winner!";
@@ -461,7 +464,7 @@ function endGame(reason) {
   }
 
   document.getElementById("endMessage").textContent = message;
-  document.getElementById("endScore").textContent = `Your Score: ${playerScore}`;
+  document.getElementById("endScore").textContent = `Your Score: ${playerCurrentScore}`;
   document.getElementById("endScreen").style.display = "flex";
 }
 
