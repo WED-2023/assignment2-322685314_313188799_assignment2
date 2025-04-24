@@ -71,8 +71,8 @@ function setupGame()
   // get the canvas, its context and setup its click event handler
   canvas = document.getElementById( "theCanvas" );
     // Set fixed dimensions for the canvas
-  canvas.width = 1280;
-  canvas.height = 720; // שומר על יחס 16:9 ומכסה גובה נאה בתוך המסך    
+  canvas.width = 1100;
+  canvas.height = 619; // שומר על יחס 16:9 ומכסה גובה נאה בתוך המסך    
   context = canvas.getContext("2d");
 
   //  Start MainShip and enemies positions
@@ -142,18 +142,25 @@ function drawEverything() {
   drawEnemyBullets();
   drawPlayerBullets();
 
-  // Set fancy font and shadow
-  context.font = "bold 20px 'Segoe UI', Tahoma, sans-serif";
-  context.fillStyle = "#ffffff";
-  context.shadowColor = "#00ffff";
-  context.shadowBlur = 5;
+  //delete?
 
-  context.fillText("Score: " + playerCurrentScore, 10, 30);
-  context.fillText("Lifes: " + playerLives, 140, 30);
-  context.fillText("Time Left: " + timeLeft + "s", 250, 30);
+  // Set fancy font and shadow
+  // context.font = "bold 20px 'Segoe UI', Tahoma, sans-serif";
+  // context.fillStyle = "#ffffff";
+  // context.shadowColor = "#00ffff";
+  // context.shadowBlur = 5;
+
+  // context.fillText("Score: " + playerCurrentScore, 10, 30);
+  // context.fillText("Lifes: " + playerLives, 140, 30);
+  // context.fillText("Time Left: " + timeLeft + "s", 250, 30);
 
   // Reset shadow to avoid affecting drawings
-  context.shadowBlur = 0;
+  //context.shadowBlur = 0;
+
+document.getElementById("score").textContent = playerCurrentScore;
+document.getElementById("lives").textContent = playerLives;
+document.getElementById("time").textContent = timeLeft + "s";
+
 }
 
 
@@ -500,7 +507,6 @@ function endGame(reason) {
     scores.forEach((s, i) => {
       const li = document.createElement("li");
       li.textContent = `#${i + 1}: ${s}`;
-      li.style.color = "#000"; // Ensure text color is black
       scoreList.appendChild(li);
     });
     

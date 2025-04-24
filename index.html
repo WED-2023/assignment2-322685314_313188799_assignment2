@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=1366, height=768" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <title>Galaxa NR</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
@@ -28,6 +29,7 @@
   <!-- CONTENT -->
   <main>
     <div id="welcome" class="screen">
+      <img id="logo" src="/images/Base/logo.jpeg" alt="Galaxa Logo" />
       <h2>Welcome to Galaxa NR!</h2>
       <p>Name: Ravit Cohen | ID: 313188799</p>
       <p>Name: Natalie Mirelashvili| ID: 322685314</p>
@@ -106,6 +108,22 @@
       <div class="canvas-container">
         <canvas id="theCanvas"></canvas>
       </div>
+
+      <div class="game-stats-panel">
+        <div class="stat-block">
+          <div class="label">Score</div>
+          <div id="score" class="value">0</div>
+        </div>
+        <div class="stat-block">
+          <div class="label">Lives</div>
+          <div id="lives" class="value">3</div>
+        </div>
+        <div class="stat-block">
+          <div class="label">Time</div>
+          <div id="time" class="value">60s</div>
+        </div>
+      </div>      
+      
     
       <!-- מסך סיום המשחק -->
       <div id="endScreen" style="display: none;">

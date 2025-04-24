@@ -5,12 +5,18 @@ html, body {
   width: 1366px;
   height: 768px;
   overflow: hidden; 
+  font-family: 'Orbitron', sans-serif;
+}
+
+input,
+select,
+label,
+button {
+  font-family: 'Orbitron', sans-serif !important;
 }
 
 
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
   padding-top: 60px;  
@@ -55,7 +61,6 @@ header {
   color: #66ccff;
   font-size: 1.2em;
   text-align: center;
-  font-family: 'Orbitron', 'Segoe UI', sans-serif;
   margin: 0;
   line-height: 1.2em;
 }
@@ -65,7 +70,7 @@ main {
   padding: 20px;
   min-height: 100vh;
   overflow: hidden;
-  position: relative; /* מאפשר מיקום יחסי למסכים פנימיים */
+  position: relative; 
 }
 
 nav {
@@ -127,12 +132,13 @@ nav button.active {
   pointer-events: none;
 }
 
+
 .screen:not(.hidden) {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
   display: block;
-  padding: 60px;
+  padding: 40px;
   margin: auto;
   max-width: 600px;
   text-align: center;
@@ -177,7 +183,8 @@ label, .birth-row small {
 }
 
 select {
-  min-width: 80px;
+  min-width: 87px;
+  text-align-last: center;
 }
 
 
@@ -292,38 +299,117 @@ footer {
 }
 
 /* Game Style: */
-/* Game Style: */
 #endScreen {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: rgba(0, 0, 30, 0.95);
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px #00ffff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 500px;
+  color: #66ccff;
+  text-align: center;
   z-index: 10;
-  min-width: 300px;
+  backdrop-filter: blur(4px);
 }
 
-#endScreen h2, #endScreen p {
-  margin: 0.5rem 0;
-  text-align: center;
+#endMessage,
+#endScore {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  margin: 10px 0;
+  font-size: 1.2em;
 }
 
 #scoreHistory {
   list-style: none;
   padding: 0;
   margin-top: 1rem;
+  text-align: left;
+  font-family: 'Orbitron', sans-serif;
+  color: #66ccff;
 }
 
 #scoreHistory li {
-  text-align: left;
-  color: #000; /* Ensure list items are visible */
+  color: #ffffff;
 }
+
+#scoreHistory li::before {
+  content: "⭐ ";
+  margin-right: 5px;
+  color: #00ffff;
+}
+
+
+#endContent {
+  background-color: transparent !important;
+  color: #66ccff;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#endScreen h2 {
+  color: #00ffff;
+  text-shadow: 0 0 4px #00ffff, 0 0 8px #00ffff;
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  font-family: 'Orbitron', sans-serif;
+}
+#endScreen button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #66ccff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+  color: #000;
+}
+
+#endScreen button:hover {
+  background-color: #3399cc;
+  color: white;
+  box-shadow: 0 0 10px #00ffff;
+}
+
+
+
+#game h2 {
+  color: #00ffff; /* טורקיז */
+  text-shadow: 0 0 2px #00ffff, 0 0 5px #00ffff;
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow: 0 0 8px #00ffff, 0 0 20px #00ffff;
+  }
+  50% {
+    text-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
+  }
+}
+
+
+#endScreen h2, #endScreen p {
+  margin: 0.5rem 0;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  color: #00ffff;
+  text-shadow: 0 0 4px #00ffff, 0 0 8px #00ffff;
+}
+
+
 
 #endScreen button {
   margin-top: 1rem;
@@ -340,20 +426,6 @@ footer {
   background-color: #5aaed6;
 }
 
-/* Add these specific styles for the end content */
-#endContent {
-  text-align: center;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  color: #000; /* Ensure text color is black */
-  width: 100%;
-}
-
-#endMessage, #endScore, #scoreHistory, #endContent h3 {
-  color: #000; /* Force text to be black */
-  margin: 10px 0;
-}
 
 #game.screen:not(.hidden) {
   display: flex;
@@ -367,6 +439,31 @@ footer {
   box-shadow: none; /* ביטול מסגרת נוספת */
   border: none;
 }
+
+.game-stats-panel {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 20px;
+  color: #66ccff;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.stat-block {
+  text-align: center;
+}
+
+.stat-block .label {
+  font-size: 1.2em;
+}
+
+.stat-block .value {
+  font-size: 1.5em;
+  color: #ffffff;                /* צבע לבן */
+  font-weight: bold;
+}
+
 
 /* Player Bullet */
 .player-bullet {
@@ -386,6 +483,11 @@ footer {
   border-radius: 3px;
 }
 
+canvas {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
 .canvas-container {
   display: flex;
   justify-content: center;
@@ -401,10 +503,12 @@ footer {
   width: 95%;
   max-width: 1000px;
   height: auto;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16 / 9;
   border-radius: 8px;
   border: 1px solid #00ffff;
   background-color: #000;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 
