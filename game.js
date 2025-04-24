@@ -1,41 +1,46 @@
-// ************************************Game Implementation************************************
-
-// ------------ Vars and Consts ------------
-var canvas; // the canvas
-var context; // used for drawing on the canvas
-
-// constants for game play
-var playerLives = 3; // number of nullification
-var playerCurrentScore = 0; 
+// ------------ Consts for each game iteration ------------
 const HIT_FIRST_REWARD = 20; // points added on a hit
 const HIT_SECOND_REWARD = 15; // points added on a hit
 const HIT_THIRD_REWARD = 10; // points added on a hit
 const HIT_FOURTH_REWARD = 5; // points added on a hit
 
-// variables for the game loop and tracking statistics
-var intervalTimer; // holds interval timer
-var timeLeft = Number(localStorage.getItem('gameTime')); // the amount of time left in seconds
-var timeElapsed = 0; // the number of seconds elapsed
-
 const enemies = [];
-var enemySpeed = 5;         // init horizontal movement speed for enemies
 const enemyBullets = [];
 const playerBullets = [];
 const playerBulletSpeed = 5; // enemy's bullet speed should match the current enemies speed!
 
-// get sounds (background sound started in first click to enter game)
-const HitTargetSound = document.getElementById( "hitSound" );
-const NullificationSound = document.getElementById( "loseSound" );
+// get sounds (background sound started when entered game)
+const ShootSound = document.getElementById( "shootSound" );
+const LoseSound = document.getElementById( "loseSound" );
+const HitSound = document.getElementById( "hitSound" );
 
-
-// ------------ Init game's images ------------
-var MainSpaceshipImg = new Image();
 const FirstTragetImg = new Image();
 const SecondTragetImg = new Image();
 const ThirdTragetImg = new Image();
 const FourthTragetImg = new Image();
 
-let imagesLoaded = 0;
+
+// ------------ Global variables which can be changed bwtween game iterations or (while game) ------------
+var canvas; // the canvas
+var context; // used for drawing on the canvas
+
+var playerLives = 3;
+var playerCurrentScore = 0; 
+
+
+// Game timing 
+var intervalTimer; // holds interval timer
+var timeLeft = Number(localStorage.getItem('gameTime')); // the amount of time left in seconds init as wanted (in configuration step)
+var timeElapsed = 0; // the number of seconds elapsed
+
+var enemySpeed = 5;  // init horizontal movement speed for enemies (will increased lineraric)
+
+
+
+// ------------ Init game's images ------------
+var MainSpaceshipImg = new Image();
+
+let imagesLoaded = 0 //5 images need to be loaded before starting the game;
 
 function checkAllImagesLoaded() {
   imagesLoaded++;
@@ -55,7 +60,7 @@ SecondTragetImg.src = "images/BadShips/BadRedShip.png";
 ThirdTragetImg.src = "images/BadShips/BadWhiteShip.png";
 FourthTragetImg.src = "images/BadShips/BadYellowShip.png";
 
-// Load choswn spaceship based on user input
+// Load chosen spaceship based on user input
 const color = localStorage.getItem("shipColor");
 switch (color) {
     case "red":
@@ -74,7 +79,6 @@ switch (color) {
 }
 
 
-
 // ------------ Start game (after all imgs loaded) ------------
 function StartGame(){
   setupGame();  
@@ -86,16 +90,16 @@ function StartGame(){
 // ------------ SETUP ------------
 function setupGame()
 {
-   // get the canvas, its context and setup its click event handler
-   canvas = document.getElementById( "theCanvas" );
-     // Set fixed dimensions for the canvas
+   // get the canvas and its context
+    canvas = document.getElementById( "theCanvas" );
+        // Set fixed dimensions for the canvas
     canvas.width = 900;  // Fixed width in pixels
     canvas.height = 800; // Fixed height for 4:3 aspect ratio
-   context = canvas.getContext("2d");
+    context = canvas.getContext("2d");
 
   //  Start MainShip and enemies positions
    MainShip  = {  x: canvas.width / 2, y: canvas.height - 80, width: 40, height: 60, speed: 5 };
-  setupEnemies();
+   setupEnemies();
 
 } // end function setupGame
 
@@ -104,10 +108,10 @@ function setupEnemies() {
     const cols = 5;
     const enemyWidth = 60;
     const enemyHeight = 60;
-    const gapX = 40;    // גדל את המרחק האופקי בין האויבים
-    const gapY = 40;    // גדל את המרחק האנכי בין האויבים
-    const startX = 120; // התאם את נקודת ההתחלה האופקית
-    const startY = 10;  // התחל גבוה יותר בקנבס
+    const gapX = 40;    // x-asix space between enemies
+    const gapY = 40;    // y-asix spacse
+    const startX = 120; // x start point
+    const startY = 10;  // y start point
   
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
@@ -116,7 +120,7 @@ function setupEnemies() {
           y: startY + row * (enemyHeight + gapY),
           width: enemyWidth,
           height: enemyHeight,
-          type: row + 1 // line 1 - blue, line 2 - red, line 3 - white, line 4 - yellow
+          type: row + 1 
         };
         enemies.push(enemy);
       }
@@ -303,9 +307,9 @@ function updateEnemyBullets() {
       enemyBullets.splice(i, 1);
     }
     if (isColliding(enemyBullets[i], MainShip)){
+      LoseSound.play();
       playerLives--; 
       resetPlayerShip(); 
-      
       // Player Loses!
       if (playerLives <= 0) {
         endGame("lives"); 
@@ -330,6 +334,7 @@ function updatePlayerBullets() {
     for (let j = enemies.length - 1; j >= 0; j--) {
       const enemy = enemies[j];
       if (isColliding(playerBullets[i], enemy)) {
+        HitSound.play();
         // If a bullet hits an enemy, remove the enemy
         enemies.splice(j, 1);
         // Remove the bullet
@@ -374,8 +379,9 @@ function isColliding(rect1, rect2) {
         rect1.y + rect1.height > rect2.y
     );
 }
+
 // ------------ SHOOT ------------
-// Add to enemyBullets aray new bullet to shoot 
+// Adding to enemyBullets array new bullet to shoot 
 function shootEnemyBullet() {
   // Filter enemies that still avaible
   const availableEnemies = enemies.filter(e => e.y < canvas.height);
@@ -410,10 +416,9 @@ document.addEventListener("keydown", function(e) {
     if (e.key === fireKey) { // spacebar to shoot - change it later
         if (canShoot){
         shootPlayerBullet();
-        HitTargetSound.play();
+        ShootSound.play();
         canShoot = false;
-        // Match setTimeout to audio time playing
-        setTimeout(() => canShoot = true, 1000);
+        setTimeout(() => canShoot = true, 500);
         }
     }
     });

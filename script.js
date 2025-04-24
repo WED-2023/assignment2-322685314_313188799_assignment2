@@ -38,6 +38,7 @@ function validateRegistration() {
   }
 
   users.push({ username: user, password: pass });
+
   errorElement.textContent = "Registration successful!";
   showScreen('login');
   return false;
@@ -99,18 +100,37 @@ window.onload = function () {
 document.getElementById("configForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const fireKey = document.getElementById("fireKey").value.trim();
   const gameTime = parseInt(document.getElementById("gameTime").value);
   const shipColor = document.getElementById("shipColor").value;
-  const allowedKeys = /^[a-z0-9\s]$/i;
+  const allowedKeys = /^[a-z0-9 ]$/i;
 
   const configError = document.getElementById("configError");
   configError.textContent = "";
 
-  if (!allowedKeys.test(fireKey)) {
-    configError.textContent = "Please enter a letter [Aa-Zz], numbers or space.";
-    return;
-  }
+  const input = document.getElementById("fireKey");
+  const keyMap = {
+    " ": "Space",
+  };
+  input.removeAttribute("readonly");
+  input.addEventListener("keydown", (e) => {
+    e.preventDefault(); // Prevent default behavior first
+    
+    const key = e.key;
+    const allowedKeys = /^[a-z0-9 ]$/i;
+    
+    // Check if the key is valid
+    if (allowedKeys.test(key)) {
+      // Valid key pressed
+      const displayKey = keyMap[key] || key;
+      input.value = displayKey;
+      localStorage.setItem("fireKey", key);
+      configError.textContent = "";
+    } else {
+      // Invalid key
+      configError.textContent = "Please enter a letter [Aa-Zz], numbers or space.";
+    }
+  });
+
 
   if (gameTime < 2) {
     configError.textContent = "Game duration must be at least 2 minutes.";
