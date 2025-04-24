@@ -255,32 +255,30 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh;
+  height: 75%;
+  max-height: 900px; /* גובה מקסימלי של 90% מגובה החלון */
+  width: 90%; /* רוחב גדול יותר */
+  max-width: 1000px; /* רוחב מקסימלי */
   overflow: hidden;
   margin: auto;
+  padding: 20px;
 }
 
 .canvas-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
-.canvas-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  width: 100%;
-}
 
 #theCanvas {
-  max-height: 80vh; /* הגבלת הגובה המרבי של הקנבס עצמו */
-  max-width: 100%; /* הגבלת הרוחב המרבי */
-  height: auto; /* אפשר לקנבס להתאים את עצמו */
-  aspect-ratio: 9/8; /* שמירה על יחס הצדדים */
+  width: 100%; /* הקנבס יתפוס את כל הרוחב האפשרי */
+  max-width: 900px;
+  height: auto;
+  max-height: 90vh; /* הגבלת הגובה המרבי ל-70% מגובה החלון */
+  aspect-ratio: 4/3; /* שמירה על יחס צדדים קצת יותר רחב */
 }
 /* Media query עבור מסכים קטנים יותר */
 @media (max-width: 950px) {

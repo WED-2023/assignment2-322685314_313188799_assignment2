@@ -11,25 +11,35 @@ const HIT_FIRST_REWARD = 20; // points added on a hit
 const HIT_SECOND_REWARD = 15; // points added on a hit
 const HIT_THIRD_REWARD = 10; // points added on a hit
 const HIT_FOURTH_REWARD = 5; // points added on a hit
-var enemySpeed = 1;         // init horizontal movement speed for enemies
 
 // variables for the game loop and tracking statistics
 var intervalTimer; // holds interval timer
 var timeLeft = 60; // the amount of time left in seconds
 var timeElapsed = 0; // the number of seconds elapsed
 
-// variables for the bad and main ship's bullets
 const enemies = [];
+const enemySpeed = 5;         // init horizontal movement speed for enemies
 const enemyBullets = [];
 const playerBullets = [];
 const playerBulletSpeed = 5; // enemy's bullet speed should match the current enemies speed!
 
-// variables for sounds
-var BackgroundSound;
-var HitTargetSound;
-var NullificationSound;
+// get sounds (background sound started in first click to enter game)
+const HitTargetSound = document.getElementById( "hitSound" );
+const NullificationSound = document.getElementById( "loseSound" );
 
-let currentPlayerName = "";
+let currentPlayerName = window.getElementById("regUser");
+function saveScore() { 
+    // Set username:[name] in local storage (client side small storage)
+    const username = sessionStorage.setItem($`{currentPlayerName}`);
+    const store_key = currentPlayerName;
+    let scores = JSON.parse(localStorage.getItem(key)) || [];
+  
+    scores.push(score);
+    scores.sort((a, b) => b - a);
+    scores = scores.slice(0, 10);
+    localStorage.setItem(key, JSON.stringify(scores));
+    return { scores, rank: scores.indexOf(score)+1};
+  }
 // ------------ Init game's images ------------
 const MainSpaceshipImg = new Image();
 const FirstTragetImg = new Image();
@@ -78,13 +88,8 @@ function setupGame()
    context = canvas.getContext("2d");
 
   //  Start MainShip and enemies positions
-   MainShip  = { x: canvas.width / 2, y: canvas.height - 60, width: 40, height: 60, speed: 5 };
+   MainShip  = {  x: canvas.width / 2, y: canvas.height - 80, width: 40, height: 60, speed: 5 };
   setupEnemies();
-
-   // get sounds
-   BackgroundSound = document.getElementById( "backgroundSound" );
-   HitTargetSound = document.getElementById( "hitSound" );
-   NullificationSound = document.getElementById( "loseSound" );
 
 } // end function setupGame
 
@@ -93,10 +98,10 @@ function setupEnemies() {
     const cols = 5;
     const enemyWidth = 60;
     const enemyHeight = 60;
-    const gapX = 80;    // גדל את המרחק האופקי בין האויבים
-    const gapY = 50;    // גדל את המרחק האנכי בין האויבים
+    const gapX = 40;    // גדל את המרחק האופקי בין האויבים
+    const gapY = 40;    // גדל את המרחק האנכי בין האויבים
     const startX = 120; // התאם את נקודת ההתחלה האופקית
-    const startY = 60;  // התחל גבוה יותר בקנבס
+    const startY = 10;  // התחל גבוה יותר בקנבס
   
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
@@ -149,15 +154,15 @@ function drawEverything() {
   // Draw playe's current score
   context.fillStyle = "white";
   context.font = "20px Arial";
-  context.fillText("Score: " + playerScore, 10, 20);
+  context.fillText("Score: " + playerScore, 10, 15);
    // Draw playe's current lifes
    context.fillStyle = "white";
    context.font = "20px Arial";
-   context.fillText("Lifes: " + playerLives, 110, 20);
+   context.fillText("Lifes: " + playerLives, 110, 15);
   // Draw game time left
   context.fillStyle = "white";
   context.font = "20px Arial";
-  context.fillText("Time Left: " + timeLeft, 200, 20);
+  context.fillText("Time Left: " + timeLeft, 200, 15);
 }
 
 function drawEnemy(){
@@ -203,8 +208,15 @@ function drawPlayerBullets() {
 // ------------ UPDATES ------------
 // For tracking user's keypress:
 const keys = {};
-document.addEventListener("keydown", e => keys[e.key] = true);
-document.addEventListener("keyup", e => delete keys[e.key]);
+document.addEventListener("keydown", e => {
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)) {
+      e.preventDefault();
+    }
+    keys[e.key] = true;
+  });
+document.addEventListener("keyup", e => {
+keys[e.key] = false;
+});
 
 function update() {
   moveMainShip();
@@ -346,12 +358,15 @@ function resetPlayerShip() {
 }
 
 function isColliding(rect1, rect2) {
-  return (
-    rect1.x < rect2.x + rect2.width &&
-    rect1.x + rect1.width > rect2.x &&
-    rect1.y < rect2.y + rect2.height &&
-    rect1.y + rect1.height > rect2.y
-  );
+    if (!rect1 || !rect2){
+        return false;
+    }
+    return (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y
+    );
 }
 // ------------ SHOOT ------------
 // Add to enemyBullets aray new bullet to shoot 
@@ -381,13 +396,20 @@ function shootEnemyBullet() {
 }
 setInterval(shootEnemyBullet, 700);
 
+let canShoot = true;
+
 // Listener for player shoot
 document.addEventListener("keydown", function(e) {
   if (e.key === " ") { // spacebar to shoot - change it later
+    if (canShoot){
     shootPlayerBullet();
+    HitTargetSound.play();
+    canShoot = false;
+    // Match setTimeout to audio time playing
+    setTimeout(() => canShoot = true, 1000);
+    }
   }
 });
-
 
 function shootPlayerBullet() {
   const bullet = {
