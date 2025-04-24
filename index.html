@@ -12,7 +12,7 @@
 
   <!-- HEADER -->
   <header>
-    <img src="logo.jpeg" alt="Logo" id="logo" />
+    <img src="/images/Base/logo.jpeg" alt="Galaxa NR Logo" id="logo" />
     <h1>Galaxa NR</h1>
   </header>
 
@@ -59,6 +59,7 @@
             <select id="birthYear"></select>
           </div>
         </div>
+        <p id="registerError" class="error"></p>
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -70,6 +71,28 @@
       <button onclick="login()">Login</button>
       <p id="loginError" class="error"></p>
     </div>
+
+    <div id="config" class="screen hidden">
+      <h2>Game Configuration</h2>
+      <form id="configForm">
+        <label for="fireKey">Choose fire key (A–Z or space):</label>
+        <input type="text" id="fireKey" maxlength="1" placeholder="e.g. F or space" required />
+    
+        <label for="gameTime">Game duration (minutes):</label>
+        <input type="number" id="gameTime" min="2" max="10" value="2" required />
+    
+        <label for="shipColor">Choose spaceship color:</label>
+        <select id="shipColor">
+          <option value="cyan">Cyan</option>
+          <option value="red">Red</option>
+          <option value="green">Green</option>
+          <option value="purple">Purple</option>
+        </select>
+        <p id="configError" class="error"></p>
+        <button type="submit">Start Game</button>
+      </form>
+    </div>
+    
 
     <div id="game" class="screen hidden">
       <h2>Welcome to the Game!</h2>
@@ -88,13 +111,8 @@
           </div>
         </div>
 
-        <div id="highScores"></div>
-      
-      
-    
-      
-      
-      
+        <div id="highScores"></div>  
+
     </div>
   </main>
 

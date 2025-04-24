@@ -1,3 +1,7 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 html, body {
   min-width: 1366px;
   min-height: 768px;
@@ -9,7 +13,7 @@ body {
   margin: 0;
   padding: 0;
   padding-top: 60px;  
-  background-image: url('background.jpg');
+  background-image: url('/images/Base/background.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -191,6 +195,31 @@ select {
 .hidden {
   display: none;
 }
+
+#config label {
+  display: block;
+  margin-top: 10px;
+  color: #66ccff;
+  font-weight: bold;
+  text-align: left;
+  width: 80%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#config input, #config select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #66ccff;
+  border: 1px solid #00ffff;
+}
+
 
 footer {
   background-color: transparent;
