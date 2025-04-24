@@ -50,7 +50,7 @@ SecondTragetImg.onload = checkAllImagesLoaded;
 ThirdTragetImg.onload = checkAllImagesLoaded;
 FourthTragetImg.onload = checkAllImagesLoaded;
 
-MainSpaceshipImg.src = "images/MainShips/MainShipOpt1.png";
+MainSpaceshipImg.src = "images/MainShips/spaceship_blue.png";
 FirstTragetImg.src = "images/BadShips/BadBlueShip.png";
 SecondTragetImg.src = "images/BadShips/BadRedShip.png";
 ThirdTragetImg.src = "images/BadShips/BadWhiteShip.png";
@@ -442,41 +442,40 @@ function saveScore() {
 }
 
 
-
 function endGame(reason) {
-  cancelAnimationFrame(GameLoopId); 
-  context.clearRect(0, 0, canvas.width, canvas.height); 
-  clearInterval(intervalTimer);
-
-
-  let message = "";
-  if (reason === "lives") {
-    message = "You Lost!";
-  } else if (reason === "time") {
-    if (playerCurrentScore < 100) {
-      message = "You can do better";
-    } else {
-      message = "Winner!";
+    cancelAnimationFrame(GameLoopId); 
+    context.clearRect(0, 0, canvas.width, canvas.height); 
+    clearInterval(intervalTimer);
+  
+    let message = "";
+    if (reason === "lives") {
+      message = "You Lost!";
+    } else if (reason === "time") {
+      if (playerCurrentScore < 100) {
+        message = "You can do better";
+      } else {
+        message = "Winner!";
+      }
+    } else if (reason === "enemiesKilled") {
+      message = "Champion!";
     }
-  } else if (reason === "enemiesKilled") {
-    message = "Champion!";
+  
+    const { scores, rank } = saveScore();
+  
+    document.getElementById("endMessage").textContent = message;
+    document.getElementById("endScore").innerHTML = `Your Score: ${playerCurrentScore}<br>Your Rank: ${rank}`;
+  
+    const scoreList = document.getElementById("scoreHistory");
+    scoreList.innerHTML = "";
+    scores.forEach((s, i) => {
+      const li = document.createElement("li");
+      li.textContent = `#${i + 1}: ${s}`;
+      li.style.color = "#000"; // Ensure text color is black
+      scoreList.appendChild(li);
+    });
+    
+    document.getElementById("endScreen").style.display = "flex";
   }
-
-  const { scores, rank } = saveScore();
-
-  document.getElementById("endMessage").textContent = message;
-  document.getElementById("endScore").textContent = `Your Score: ${playerCurrentScore}.\nYour Rank: ${rank}`;
-
-  const scoreList = document.getElementById("scoreHistory");
-  document.getElementById("endScore").innerHTML = `Your Score: ${playerCurrentScore}<br>Your Rank: ${rank}`;
-  scoreList.innerHTML = "";
-  scores.forEach((s, i) => {
-    const li = document.createElement("li");
-    li.textContent = `#${i + 1}: ${s}`;
-    scoreList.appendChild(li);
-  });
-  document.getElementById("endScreen").style.display = "flex";
-}
 
 function restartGame() {
   document.getElementById("endScreen").style.display = "none";

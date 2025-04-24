@@ -240,6 +240,7 @@ footer {
 }
 
 /* Game Style: */
+/* Game Style: */
 #endScreen {
   position: absolute;
   top: 50%;
@@ -269,6 +270,7 @@ footer {
 
 #scoreHistory li {
   text-align: left;
+  color: #000; /* Ensure list items are visible */
 }
 
 #endScreen button {
@@ -285,6 +287,22 @@ footer {
 #endScreen button:hover {
   background-color: #5aaed6;
 }
+
+/* Add these specific styles for the end content */
+#endContent {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  color: #000; /* Ensure text color is black */
+  width: 100%;
+}
+
+#endMessage, #endScore, #scoreHistory, #endContent h3 {
+  color: #000; /* Force text to be black */
+  margin: 10px 0;
+}
+
 #game.screen:not(.hidden) {
   display: flex;
   flex-direction: column;
