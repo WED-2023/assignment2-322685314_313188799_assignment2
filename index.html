@@ -22,7 +22,7 @@
     <button onclick="showScreen('register')">Register</button>
     <button onclick="showScreen('login')">Login</button>
     <button onclick="openAbout()">About</button>
-    <button onclick="showScreen('game'); document.getElementById('backgroundSound').play();">Enter Game (Dev Test)</button>
+    <!-- <button onclick="showScreen('game'); document.getElementById('backgroundSound').play();">Enter Game (Dev Test)</button> -->
   </nav>
 
   <!-- CONTENT -->
@@ -72,10 +72,11 @@
       <p id="loginError" class="error"></p>
     </div>
 
+ <!-- Configuration -->
     <div id="config" class="screen hidden">
       <h2>Game Configuration</h2>
       <form id="configForm">
-        <label for="fireKey">Choose fire key (A–Z or space):</label>
+        <label for="fireKey">Choose fire key (Aa–Zz, number or space):</label>
         <input type="text" id="fireKey" maxlength="1" placeholder="e.g. F or space" required />
     
         <label for="gameTime">Game duration (minutes):</label>
@@ -86,28 +87,28 @@
           <option value="cyan">Cyan</option>
           <option value="red">Red</option>
           <option value="green">Green</option>
-          <option value="purple">Purple</option>
+          <option value="orange">Orange</option>
         </select>
         <p id="configError" class="error"></p>
         <button type="submit">Start Game</button>
       </form>
     </div>
     
-
+ <!-- Game -->
     <div id="game" class="screen hidden">
       <h2>Welcome to the Game!</h2>
     
-      <!-- סאונדים -->
+      <!-- Sounds -->
       <audio id="loseSound" src="Sounds/lose.mp3"></audio>
       <audio id="hitSound" src="Sounds/hit.mp3"></audio>
       <audio id="backgroundSound" src="Sounds/background.mp3"></audio>
     
-      <!-- הקנבס של המשחק -->
+      <!-- Canvas -->
       <div class="canvas-container">
         <canvas id="theCanvas"></canvas>
       </div>
     
-      <!-- מסך סיום המשחק -->
+      <!-- End game screen -->
       <div id="endScreen" style="display: none;">
         <div id="endContent" style="text-align: center; background-color: #fff; padding: 20px; border-radius: 10px; color: #000;">
           <h2 id="endMessage" style="color: #000;"></h2>
@@ -117,9 +118,6 @@
           <button onclick="restartGame()">Restart</button>
         </div>
       </div>
-    
-      <!-- טבלת שיאים (אם צריך בעתיד) -->
-      <div id="highScores"></div>
     </div>
   </main>
 
@@ -142,6 +140,6 @@
   <footer>
     <p>© 2025 - Galaxa NR | Contact: cravi@post.bgu.ac.il , miralshv@post.bgu.ac.il</p>
   </footer>
-  
+
 </body>
 </html>

@@ -14,7 +14,7 @@ const HIT_FOURTH_REWARD = 5; // points added on a hit
 
 // variables for the game loop and tracking statistics
 var intervalTimer; // holds interval timer
-var timeLeft = 60; // the amount of time left in seconds
+var timeLeft = Number(localStorage.getItem('gameTime')); // the amount of time left in seconds
 var timeElapsed = 0; // the number of seconds elapsed
 
 const enemies = [];
@@ -29,7 +29,7 @@ const NullificationSound = document.getElementById( "loseSound" );
 
 
 // ------------ Init game's images ------------
-const MainSpaceshipImg = new Image();
+var MainSpaceshipImg = new Image();
 const FirstTragetImg = new Image();
 const SecondTragetImg = new Image();
 const ThirdTragetImg = new Image();
@@ -50,11 +50,29 @@ SecondTragetImg.onload = checkAllImagesLoaded;
 ThirdTragetImg.onload = checkAllImagesLoaded;
 FourthTragetImg.onload = checkAllImagesLoaded;
 
-MainSpaceshipImg.src = "images/MainShips/spaceship_blue.png";
 FirstTragetImg.src = "images/BadShips/BadBlueShip.png";
 SecondTragetImg.src = "images/BadShips/BadRedShip.png";
 ThirdTragetImg.src = "images/BadShips/BadWhiteShip.png";
 FourthTragetImg.src = "images/BadShips/BadYellowShip.png";
+
+// Load choswn spaceship based on user input
+const color = localStorage.getItem("shipColor");
+switch (color) {
+    case "red":
+    MainSpaceshipImg.src = "images/MainShips/spaceship_red.png";
+    break;
+    case "green":
+    MainSpaceshipImg.src = "images/MainShips/spaceship_green.png";
+    break;
+    case "orange":
+    MainSpaceshipImg.src = "images/MainShips/spaceship_orange.png";
+    break;
+    case "cyan":
+    default:
+    MainSpaceshipImg.src = "images/MainShips/spaceship_blue.png";
+    break;
+}
+
 
 
 // ------------ Start game (after all imgs loaded) ------------
@@ -388,16 +406,17 @@ let canShoot = true;
 
 // Listener for player shoot
 document.addEventListener("keydown", function(e) {
-  if (e.key === " ") { // spacebar to shoot - change it later
-    if (canShoot){
-    shootPlayerBullet();
-    HitTargetSound.play();
-    canShoot = false;
-    // Match setTimeout to audio time playing
-    setTimeout(() => canShoot = true, 1000);
+    const fireKey = localStorage.getItem('fireKey');
+    if (e.key === fireKey) { // spacebar to shoot - change it later
+        if (canShoot){
+        shootPlayerBullet();
+        HitTargetSound.play();
+        canShoot = false;
+        // Match setTimeout to audio time playing
+        setTimeout(() => canShoot = true, 1000);
+        }
     }
-  }
-});
+    });
 
 function shootPlayerBullet() {
   const bullet = {

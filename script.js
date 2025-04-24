@@ -99,16 +99,16 @@ window.onload = function () {
 document.getElementById("configForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const fireKey = document.getElementById("fireKey").value.trim().toLowerCase();
+  const fireKey = document.getElementById("fireKey").value.trim();
   const gameTime = parseInt(document.getElementById("gameTime").value);
   const shipColor = document.getElementById("shipColor").value;
-  const allowedKeys = /^[a-z\s]$/i;
+  const allowedKeys = /^[a-z0-9\s]$/i;
 
   const configError = document.getElementById("configError");
   configError.textContent = "";
 
   if (!allowedKeys.test(fireKey)) {
-    configError.textContent = "Please enter a letter (A–Z) or space.";
+    configError.textContent = "Please enter a letter [Aa-Zz], numbers or space.";
     return;
   }
 
@@ -120,7 +120,7 @@ document.getElementById("configForm").addEventListener("submit", function (e) {
   localStorage.setItem('fireKey', fireKey);
   localStorage.setItem('gameTime', gameTime);
   localStorage.setItem('shipColor', shipColor);
-  
+  document.getElementById('backgroundSound').play()
   showScreen("game");
 });
 
