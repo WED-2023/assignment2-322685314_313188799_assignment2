@@ -18,7 +18,7 @@ var timeLeft = 60; // the amount of time left in seconds
 var timeElapsed = 0; // the number of seconds elapsed
 
 const enemies = [];
-const enemySpeed = 5;         // init horizontal movement speed for enemies
+var enemySpeed = 5;         // init horizontal movement speed for enemies
 const enemyBullets = [];
 const playerBullets = [];
 const playerBulletSpeed = 5; // enemy's bullet speed should match the current enemies speed!
@@ -27,22 +27,7 @@ const playerBulletSpeed = 5; // enemy's bullet speed should match the current en
 const HitTargetSound = document.getElementById( "hitSound" );
 const NullificationSound = document.getElementById( "loseSound" );
 
-// put this in proper register file
-const username = window.getElementById('regUser');
-sessionStorage.setItem($`{username}`); 
-// let currentPlayerName = window.getElementById("regUser");
 
-function saveScore() { 
-// Dynamiclly get current username from session key = username, value = [user-score]
-    const userName = sessionStorage.getItem($`{username}`)
-    let scores = JSON.parse(localStorage.getItem()) || [];
-    
-    scores.push(score);
-    scores.sort((a, b) => b - a);
-    scores = scores.slice(0, 10);
-    localStorage.setItem(key, JSON.stringify(scores));
-    return { scores, rank: scores.indexOf(score)+1};
-  }
 // ------------ Init game's images ------------
 const MainSpaceshipImg = new Image();
 const FirstTragetImg = new Image();
@@ -437,18 +422,32 @@ function GameLoop(){
 }
 }
 
+
+// Put this in your register/login logic
+const currentPlayerName = document.getElementById("regUser").value;
+sessionStorage.setItem("username", currentPlayerName);
+
+// Function to save and return score list and rank
+function saveScore() {
+    const userNameKey = "scores_" + sessionStorage.getItem("username");
+    let scores = JSON.parse(localStorage.getItem(userNameKey)) || [];
+    
+    scores.push(playerCurrentScore);
+    scores.sort((a, b) => b - a); // Sort descending
+    scores = scores.slice(0, 10); // Top 10 only
+
+    localStorage.setItem(userNameKey, JSON.stringify(scores));
+    
+    return { scores, rank: scores.indexOf(playerCurrentScore) + 1 };
+}
+
+
+
 function endGame(reason) {
   cancelAnimationFrame(GameLoopId); 
   context.clearRect(0, 0, canvas.width, canvas.height); 
   clearInterval(intervalTimer);
 
-  // // שמירת ציון
-  // let history = JSON.parse(localStorage.getItem("scoreHistory")) || [];
-  // history.push(playerScore);
-  // history.sort((a, b) => b - a); 
-  // localStorage.setItem("scoreHistory", JSON.stringify(history));
-
-  // const rank = history.indexOf(playerScore) + 1;
 
   let message = "";
   if (reason === "lives") {
@@ -463,8 +462,19 @@ function endGame(reason) {
     message = "Champion!";
   }
 
+  const { scores, rank } = saveScore();
+
   document.getElementById("endMessage").textContent = message;
-  document.getElementById("endScore").textContent = `Your Score: ${playerCurrentScore}`;
+  document.getElementById("endScore").textContent = `Your Score: ${playerCurrentScore}.\nYour Rank: ${rank}`;
+
+  const scoreList = document.getElementById("scoreHistory");
+  document.getElementById("endScore").innerHTML = `Your Score: ${playerCurrentScore}<br>Your Rank: ${rank}`;
+  scoreList.innerHTML = "";
+  scores.forEach((s, i) => {
+    const li = document.createElement("li");
+    li.textContent = `#${i + 1}: ${s}`;
+    scoreList.appendChild(li);
+  });
   document.getElementById("endScreen").style.display = "flex";
 }
 
