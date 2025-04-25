@@ -1,15 +1,22 @@
 *, *::before, *::after {
   box-sizing: border-box;
 }
-
 html, body {
-  min-width: 1366px;
-  min-height: 768px;
-  overflow-x: auto;
+  width: 1366px;
+  height: 768px;
+  overflow: hidden; 
+  font-family: 'Orbitron', sans-serif;
 }
 
+input,
+select,
+label,
+button {
+  font-family: 'Orbitron', sans-serif !important;
+}
+
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
   padding-top: 60px;  
@@ -24,32 +31,65 @@ body {
 
 header {
   background-color: transparent;
-  color: #66ccff;
   padding: 1.2em;
   text-align: center;
   font-size: 1.5em;
   text-shadow: 0 0 5px #3399cc;
 }
 
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 #logo {
-  width: 160px;
-  vertical-align: middle;
-  margin-right: 10px;
+  width: 100px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: transform 0.6s ease-in-out;
+}
+
+
+#logo.animate {
+  transform: rotate(360deg);
+}
+
+#siteTitle {
+  color: #66ccff;
+  font-size: 1.2em;
+  text-align: center;
+  margin: 0;
+  line-height: 1.2em;
+}
+
+main {
+  margin-left: 300px;
+  padding: 20px;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative; 
 }
 
 nav {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
   top: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 10px 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  padding-top: 60px;
+  background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(6px);
+  overflow-y: auto;
+  z-index: 1000;
 }
-
 
 nav button {
   background-color: rgba(0, 0, 0, 0.4);
@@ -60,27 +100,45 @@ nav button {
   border-radius: 20px;
   cursor: pointer;
   font-size: 1em;
-  transition: all 0.3s;
+  transition: all 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.nav-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 nav button:hover {
   background-color: rgba(0, 85, 119, 0.4);
   color: #ffffff;
-  box-shadow: 0 0 10px #3399cc;
+  box-shadow: 0 0 12px #66ccff, 0 0 20px #66ccff inset;
+  transform: scale(1.05);
 }
 
-main {
-  padding: 20px;
-  min-height: calc(768px - 200px);
+
+nav button.active {
+  background-color: rgba(0, 85, 119, 0.5);
+  box-shadow: 0 0 10px #00ffff;
+  color: white;
 }
+
 
 .screen {
-  display: none;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
 }
 
+
 .screen:not(.hidden) {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
   display: block;
-  padding: 60px;
+  padding: 40px;
   margin: auto;
   max-width: 600px;
   text-align: center;
@@ -125,7 +183,8 @@ label, .birth-row small {
 }
 
 select {
-  min-width: 80px;
+  min-width: 87px;
+  text-align-last: center;
 }
 
 
@@ -240,105 +299,255 @@ footer {
 }
 
 /* Game Style: */
-/* Game Style: */
+/* Game End Screen Style */
 #endScreen {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 10;
-  min-width: 300px;
-}
-
-#endScreen h2, #endScreen p {
-  margin: 0.5rem 0;
+  background-color: rgba(0, 0, 30, 0.95);
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px #00ffff;
+  border-radius: 12px;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 500px;
+  color: #66ccff;
   text-align: center;
+  z-index: 10;
+  backdrop-filter: blur(4px);
 }
 
+/* תוכן פנימי של מסך הסיום */
+#endContent.end-box {
+  text-align: center;
+  background-color: rgba(0, 0, 30, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  color: #66ccff;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
+/* הודעת ניצחון/הפסד + ציון */
+#endMessage,
+#endScore {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  margin: 10px 0;
+  font-size: 1.2em;
+}
+
+.end-summary {
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: linear-gradient(145deg, rgba(0, 0, 30, 0.8), rgba(0, 30, 60, 0.8));
+  box-shadow:
+    0 0 10px #00ffffaa,
+    inset 0 0 10px #00ffff33,
+    0 8px 16px rgba(0, 255, 255, 0.2);
+  color: #66ccff;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 5px #00ffff;
+  backdrop-filter: blur(4px);
+}
+
+
+
+/* טקסטים בתוך endContent שמעל טבלת השיאים */
+#endContent.end-box h2,
+#endContent.end-box p,
+#endContent.end-box h3,
+#endContent.end-box ul {
+  color: #66ccff;
+}
+
+
+/* טבלת השיאים */
 #scoreHistory {
   list-style: none;
   padding: 0;
-  margin-top: 1rem;
+  margin: 1rem 0;
+  text-align: left;
+  font-family: 'Orbitron', sans-serif;
+  color: #ffffff;
 }
 
 #scoreHistory li {
-  text-align: left;
-  color: #000; /* Ensure list items are visible */
+  color: #ffffff;
 }
 
+
+
+#scoreHistory li::before {
+  content: "⭐ ";
+  margin-right: 5px;
+  color: #00ffff;
+}
+#scoreHistory .rank-num {
+  color: #00ffff;
+  font-weight: bold;
+  margin-right: 6px;
+  font-size: 1.05em;
+}
+
+#scoreHistory .score-val {
+  color: #ffffff;
+  font-weight: 400;
+}
+#scoreHistory .highlight-player {
+  border: 2px solid #ffd700;
+  background-color: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 10px #ffd700aa;
+  transform: scale(1.02);
+}
+
+
+/* כפתור ריסטארט */
 #endScreen button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  margin: 2rem auto 0 auto; /* מרווח גדול מלמעלה, ממורכז */
+  padding: 0.6rem 1.4rem;
   background-color: #7EC8E3;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 1.1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
+  font-family: 'Orbitron', sans-serif;
+  color: #000;
+  display: block;
+  box-shadow: 0 0 10px #00ffff44;
+  transition: 0.3s ease;
 }
 
 #endScreen button:hover {
   background-color: #5aaed6;
+  color: white;
+  box-shadow: 0 0 12px #00ffff, 0 0 20px #00ffff inset;
 }
 
-/* Add these specific styles for the end content */
-#endContent {
-  text-align: center;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  color: #000; /* Ensure text color is black */
-  width: 100%;
+
+#endScreen button:hover {
+  background-color: #5aaed6;
+  color: white;
+  box-shadow: 0 0 10px #00ffff;
 }
 
-#endMessage, #endScore, #scoreHistory, #endContent h3 {
-  color: #000; /* Force text to be black */
-  margin: 10px 0;
+/* כותרת למסך המשחק */
+#game h2 {
+  color: #00ffff;
+  text-shadow: 0 0 2px #00ffff, 0 0 5px #00ffff;
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  font-family: 'Orbitron', sans-serif;
 }
+
+/* אנימציית זוהר */
+@keyframes pulseGlow {
+  0%, 100% {
+    text-shadow: 0 0 8px #00ffff, 0 0 20px #00ffff;
+  }
+  50% {
+    text-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
+  }
+}
+
+
 
 #game.screen:not(.hidden) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 75%;
-  max-height: 900px; /* גובה מקסימלי של 90% מגובה החלון */
-  width: 90%; /* רוחב גדול יותר */
-  max-width: 1000px; /* רוחב מקסימלי */
-  overflow: hidden;
+  justify-content: flex-start;
+  height: 100%;
+  max-width: 860px;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
+  box-shadow: none; /* ביטול מסגרת נוספת */
+  border: none;
+}
+
+.game-stats-panel {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 20px;
+  color: #66ccff;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+.stat-block {
+  text-align: center;
+}
+
+.stat-block .label {
+  font-size: 1.2em;
+}
+
+.stat-block .value {
+  font-size: 1.5em;
+  color: #ffffff;                /* צבע לבן */
+  font-weight: bold;
+}
+
+
+/* Player Bullet */
+.player-bullet {
+  width: 6px;
+  height: 15px;
+  background: linear-gradient(to top, #66ccff, #ffffff);
+  box-shadow: 0 0 8px #66ccff;
+  border-radius: 3px;
+}
+
+/* Enemy Bullet */
+.enemy-bullet {
+  width: 6px;
+  height: 15px;
+  background: linear-gradient(to bottom, #ff4444, #ffaaaa);
+  box-shadow: 0 0 8px #ff0000;
+  border-radius: 3px;
+}
+
+canvas {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 .canvas-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 0 12px #00ffff;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 #theCanvas {
-  width: 100%; /* הקנבס יתפוס את כל הרוחב האפשרי */
-  max-width: 900px;
+  width: 95%;
+  max-width: 1000px;
   height: auto;
-  max-height: 90vh; /* הגבלת הגובה המרבי ל-70% מגובה החלון */
-  aspect-ratio: 4/3; /* שמירה על יחס צדדים קצת יותר רחב */
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  border: 1px solid #00ffff;
+  background-color: #000;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
-/* Media query עבור מסכים קטנים יותר */
+
+
 @media (max-width: 950px) {
   #theCanvas {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 9/8;
+    max-width: 95vw;
+    aspect-ratio: 16 / 9;
   }
 }
 

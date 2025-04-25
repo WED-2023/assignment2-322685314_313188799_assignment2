@@ -2,32 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=1366, height=768" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <title>Galaxa NR</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
   <script src="game.js" defer></script>
 </head>
+
 <body>
-
-  <!-- HEADER -->
-  <header>
-    <img src="/images/Base/logo.jpeg" alt="Galaxa NR Logo" id="logo" />
-    <h1>Galaxa NR</h1>
-  </header>
-
   <!-- MENU -->
-  <nav>
-    <button onclick="showScreen('welcome')">Welcome</button>
-    <button onclick="showScreen('register')">Register</button>
-    <button onclick="showScreen('login')">Login</button>
-    <button onclick="openAbout()">About</button>
-    <!-- <button onclick="showScreen('game'); document.getElementById('backgroundSound').play();">Enter Game (Dev Test)</button> -->
-  </nav>
+<nav>
+  <div class="nav-header">
+    <img src="/images/Base/logo.jpeg" alt="Galaxa NR Logo" style="width: 130px; margin-bottom: 15px;">
+    <h1 id="siteTitle">Galaxa NR</h1>
+  </div>
+  
+  <button onclick="showScreen('welcome')">Welcome</button>
+  <button onclick="showScreen('register')">Register</button>
+  <button onclick="showScreen('login')">Login</button>
+  <button onclick="openAbout()">About</button>
+  <button onclick="showScreen('game'); document.getElementById('backgroundSound').play();">Enter Game</button>
+</nav>
+
 
   <!-- CONTENT -->
   <main>
     <div id="welcome" class="screen">
+      <img id="logo" src="/images/Base/logo.jpeg" alt="Galaxa Logo" />
       <h2>Welcome to Galaxa NR!</h2>
       <p>Name: Ravit Cohen | ID: 313188799</p>
       <p>Name: Natalie Mirelashvili| ID: 322685314</p>
@@ -108,17 +110,42 @@
       <div class="canvas-container">
         <canvas id="theCanvas"></canvas>
       </div>
-    
-      <!-- End game screen -->
+
+      <div class="game-stats-panel">
+        <div class="stat-block">
+          <div class="label">Score</div>
+          <div id="score" class="value">0</div>
+        </div>
+        <div class="stat-block">
+          <div class="label">Lives</div>
+          <div id="lives" class="value">3</div>
+        </div>
+        <div class="stat-block">
+          <div class="label">Time</div>
+          <div id="time" class="value">60s</div>
+        </div>
+      </div>      
+      
+
+      <!-- מסך סיום המשחק -->
       <div id="endScreen" style="display: none;">
-        <div id="endContent" style="text-align: center; background-color: #fff; padding: 20px; border-radius: 10px; color: #000;">
-          <h2 id="endMessage" style="color: #000;"></h2>
-          <p id="endScore" style="color: #000;"></p>
-          <h3 style="color: #000;">Score History:</h3>
-          <ul id="scoreHistory" class="scoreHistory" style="color: #000;"></ul>
+        <div id="endContent" class="end-box">
+          <div class="end-summary">
+            <h2 id="endMessage"></h2>
+            <p id="endScore"></p>
+          </div>
+
+          <h3>High Scores: 🏆🔥</h3>
+          <ul id="scoreHistory" class="scoreHistory"></ul>
+          
           <button onclick="restartGame()">Restart</button>
         </div>
       </div>
+
+      
+    
+      <!-- טבלת שיאים (אם צריך בעתיד) -->
+      <div id="highScores"></div>
     </div>
   </main>
 
@@ -141,6 +168,6 @@
   <footer>
     <p>© 2025 - Galaxa NR | Contact: cravi@post.bgu.ac.il , miralshv@post.bgu.ac.il</p>
   </footer>
-
+  
 </body>
 </html>

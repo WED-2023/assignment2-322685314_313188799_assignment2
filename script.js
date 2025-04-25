@@ -2,8 +2,14 @@ const users = JSON.parse(localStorage.getItem('users')) || [{ username: "p", pas
 
 function showScreen(screenId) {
   document.querySelectorAll(".screen").forEach(div => div.classList.add("hidden"));
-  document.getElementById(screenId).classList.remove("hidden");
+  const next = document.getElementById(screenId);
+  next.classList.remove("hidden");
+
+  const logo = document.getElementById("logo");
+  logo.classList.add("animate");
+  setTimeout(() => logo.classList.remove("animate"), 600);
 }
+
 
 function validateRegistration() {
   const user = document.getElementById("regUser").value;

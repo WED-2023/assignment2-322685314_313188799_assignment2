@@ -90,28 +90,28 @@ function StartGame(){
 // ------------ SETUP ------------
 function setupGame()
 {
-   // get the canvas and its context
-    canvas = document.getElementById( "theCanvas" );
-        // Set fixed dimensions for the canvas
-    canvas.width = 900;  // Fixed width in pixels
-    canvas.height = 800; // Fixed height for 4:3 aspect ratio
-    context = canvas.getContext("2d");
+  // get the canvas, its context and setup its click event handler
+  canvas = document.getElementById( "theCanvas" );
+    // Set fixed dimensions for the canvas
+  canvas.width = 1100;
+  canvas.height = 619; // שומר על יחס 16:9 ומכסה גובה נאה בתוך המסך    
+  context = canvas.getContext("2d");
 
   //  Start MainShip and enemies positions
-   MainShip  = {  x: canvas.width / 2, y: canvas.height - 80, width: 40, height: 60, speed: 5 };
-   setupEnemies();
+  MainShip  = {  x: canvas.width / 2, y: canvas.height - 120, width: 90, height: 110, speed: 5 };
+  setupEnemies();
 
 } // end function setupGame
 
 function setupEnemies() {
     const rows = 4;
     const cols = 5;
-    const enemyWidth = 60;
+    const enemyWidth = 70;
     const enemyHeight = 60;
-    const gapX = 40;    // x-asix space between enemies
-    const gapY = 40;    // y-asix spacse
-    const startX = 120; // x start point
-    const startY = 10;  // y start point
+    const gapX = 20;    // גדל את המרחק האופקי בין האויבים
+    const gapY = 5;    // גדל את המרחק האנכי בין האויבים
+    const startX = 120; // התאם את נקודת ההתחלה האופקית
+    const startY = 10;  // התחל גבוה יותר בקנבס
   
     for (let row = 0; row < rows; row++) {
       for (let col = 0; col < cols; col++) {
@@ -156,24 +156,35 @@ function startGameTimer() {
 // ------------ Drew ------------
 function drawEverything() {
   context.clearRect(0, 0, canvas.width, canvas.height);
+  
   // Draw MainShip
   context.drawImage(MainSpaceshipImg, MainShip.x, MainShip.y, MainShip.width, MainShip.height);
+
   drawEnemy();
   drawEnemyBullets();
   drawPlayerBullets();
-  // Draw playe's current score
-  context.fillStyle = "white";
-  context.font = "20px Arial";
-  context.fillText("Score: " + playerCurrentScore, 10, 15);
-   // Draw playe's current lifes
-   context.fillStyle = "white";
-   context.font = "20px Arial";
-   context.fillText("Lifes: " + playerLives, 110, 15);
-  // Draw game time left
-  context.fillStyle = "white";
-  context.font = "20px Arial";
-  context.fillText("Time Left: " + timeLeft, 200, 15);
+
+  //delete?
+
+  // Set fancy font and shadow
+  // context.font = "bold 20px 'Segoe UI', Tahoma, sans-serif";
+  // context.fillStyle = "#ffffff";
+  // context.shadowColor = "#00ffff";
+  // context.shadowBlur = 5;
+
+  // context.fillText("Score: " + playerCurrentScore, 10, 30);
+  // context.fillText("Lifes: " + playerLives, 140, 30);
+  // context.fillText("Time Left: " + timeLeft + "s", 250, 30);
+
+  // Reset shadow to avoid affecting drawings
+  //context.shadowBlur = 0;
+
+document.getElementById("score").textContent = playerCurrentScore;
+document.getElementById("lives").textContent = playerLives;
+document.getElementById("time").textContent = timeLeft + "s";
+
 }
+
 
 function drawEnemy(){
   for (const enemy of enemies) {
@@ -200,20 +211,46 @@ function drawEnemy(){
     context.drawImage(enemyImg, enemy.x, enemy.y, enemy.width, enemy.height);
   }
 }
+function drawPlayerBullets() {
+  for (let bullet of playerBullets) {
+    const gradient = context.createRadialGradient(
+      bullet.x + bullet.width / 2,
+      bullet.y + bullet.height / 2,
+      0,
+      bullet.x + bullet.width / 2,
+      bullet.y + bullet.height / 2,
+      10
+    );
+    gradient.addColorStop(0, "#ffffff");
+    gradient.addColorStop(1, "#66ccff");
+
+    context.fillStyle = gradient;
+    context.beginPath();
+    context.ellipse(bullet.x + 2, bullet.y + 5, 4, 10, 0, 0, 2 * Math.PI);
+    context.fill();
+  }
+}
 
 function drawEnemyBullets() {
-  context.fillStyle = "red";
   for (let bullet of enemyBullets) {
-    context.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+    const gradient = context.createRadialGradient(
+      bullet.x + bullet.width / 2,
+      bullet.y + bullet.height / 2,
+      0,
+      bullet.x + bullet.width / 2,
+      bullet.y + bullet.height / 2,
+      10
+    );
+    gradient.addColorStop(0, "#ffaa00");
+    gradient.addColorStop(1, "#ff3300");
+
+    context.fillStyle = gradient;
+    context.beginPath();
+    context.ellipse(bullet.x + 2, bullet.y + 5, 4, 10, 0, 0, 2 * Math.PI);
+    context.fill();
   }
 }
 
-function drawPlayerBullets() {
-  context.fillStyle = "blue"; // Set bullet color
-  for (let bullet of playerBullets) {
-    context.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-  }
-}
 
 // ------------ UPDATES ------------
 // For tracking user's keypress:
@@ -364,8 +401,8 @@ function updatePlayerBullets() {
   }
 }
 function resetPlayerShip() {
-  MainShip.x = canvas.width / 2
-  MainShip.y = canvas.height - 60; 
+  MainShip.x = canvas.width / 2 - MainShip.width / 2;
+  MainShip.y = canvas.height - 100;
 }
 
 function isColliding(rect1, rect2) {
@@ -493,8 +530,12 @@ function endGame(reason) {
     scoreList.innerHTML = "";
     scores.forEach((s, i) => {
       const li = document.createElement("li");
-      li.textContent = `#${i + 1}: ${s}`;
-      li.style.color = "#000"; // Ensure text color is black
+      li.innerHTML = `<span class="rank-num">${i + 1}.</span> <span class="score-val">${s} pts</span>`;
+
+      if (i + 1 === rank) {
+        li.classList.add("highlight-player");
+      }
+        
       scoreList.appendChild(li);
     });
     
