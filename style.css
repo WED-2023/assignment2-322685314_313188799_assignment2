@@ -299,6 +299,7 @@ footer {
 }
 
 /* Game Style: */
+/* Game End Screen Style */
 #endScreen {
   position: absolute;
   top: 50%;
@@ -317,6 +318,20 @@ footer {
   backdrop-filter: blur(4px);
 }
 
+/* תוכן פנימי של מסך הסיום */
+#endContent.end-box {
+  text-align: center;
+  background-color: rgba(0, 0, 30, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  color: #66ccff;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
+/* הודעת ניצחון/הפסד + ציון */
 #endMessage,
 #endScore {
   color: #ffffff;
@@ -325,65 +340,106 @@ footer {
   font-size: 1.2em;
 }
 
+.end-summary {
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  background: linear-gradient(145deg, rgba(0, 0, 30, 0.8), rgba(0, 30, 60, 0.8));
+  box-shadow:
+    0 0 10px #00ffffaa,
+    inset 0 0 10px #00ffff33,
+    0 8px 16px rgba(0, 255, 255, 0.2);
+  color: #66ccff;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 5px #00ffff;
+  backdrop-filter: blur(4px);
+}
+
+
+
+/* טקסטים בתוך endContent שמעל טבלת השיאים */
+#endContent.end-box h2,
+#endContent.end-box p,
+#endContent.end-box h3,
+#endContent.end-box ul {
+  color: #66ccff;
+}
+
+
+/* טבלת השיאים */
 #scoreHistory {
   list-style: none;
   padding: 0;
-  margin-top: 1rem;
+  margin: 1rem 0;
   text-align: left;
   font-family: 'Orbitron', sans-serif;
-  color: #66ccff;
+  color: #ffffff;
 }
 
 #scoreHistory li {
   color: #ffffff;
 }
 
+
+
 #scoreHistory li::before {
   content: "⭐ ";
   margin-right: 5px;
   color: #00ffff;
 }
-
-
-#endContent {
-  background-color: transparent !important;
-  color: #66ccff;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-#endScreen h2 {
+#scoreHistory .rank-num {
   color: #00ffff;
-  text-shadow: 0 0 4px #00ffff, 0 0 8px #00ffff;
-  font-size: 2.2em;
-  margin-bottom: 10px;
-  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  margin-right: 6px;
+  font-size: 1.05em;
 }
+
+#scoreHistory .score-val {
+  color: #ffffff;
+  font-weight: 400;
+}
+#scoreHistory .highlight-player {
+  border: 2px solid #ffd700;
+  background-color: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 10px #ffd700aa;
+  transform: scale(1.02);
+}
+
+
+/* כפתור ריסטארט */
 #endScreen button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #66ccff;
+  margin: 2rem auto 0 auto; /* מרווח גדול מלמעלה, ממורכז */
+  padding: 0.6rem 1.4rem;
+  background-color: #7EC8E3;
   border: none;
-  border-radius: 10px;
-  font-size: 1.1em;
+  border-radius: 12px;
+  font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s ease;
   font-family: 'Orbitron', sans-serif;
   color: #000;
+  display: block;
+  box-shadow: 0 0 10px #00ffff44;
+  transition: 0.3s ease;
 }
 
 #endScreen button:hover {
-  background-color: #3399cc;
+  background-color: #5aaed6;
+  color: white;
+  box-shadow: 0 0 12px #00ffff, 0 0 20px #00ffff inset;
+}
+
+
+#endScreen button:hover {
+  background-color: #5aaed6;
   color: white;
   box-shadow: 0 0 10px #00ffff;
 }
 
-
-
+/* כותרת למסך המשחק */
 #game h2 {
-  color: #00ffff; /* טורקיז */
+  color: #00ffff;
   text-shadow: 0 0 2px #00ffff, 0 0 5px #00ffff;
   font-size: 2.2em;
   margin-bottom: 10px;
@@ -391,6 +447,7 @@ footer {
   font-family: 'Orbitron', sans-serif;
 }
 
+/* אנימציית זוהר */
 @keyframes pulseGlow {
   0%, 100% {
     text-shadow: 0 0 8px #00ffff, 0 0 20px #00ffff;
@@ -400,31 +457,6 @@ footer {
   }
 }
 
-
-#endScreen h2, #endScreen p {
-  margin: 0.5rem 0;
-  text-align: center;
-  font-family: 'Orbitron', sans-serif;
-  color: #00ffff;
-  text-shadow: 0 0 4px #00ffff, 0 0 8px #00ffff;
-}
-
-
-
-#endScreen button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #7EC8E3;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-#endScreen button:hover {
-  background-color: #5aaed6;
-}
 
 
 #game.screen:not(.hidden) {

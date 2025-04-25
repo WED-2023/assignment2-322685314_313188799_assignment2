@@ -84,10 +84,10 @@ function setupGame()
 function setupEnemies() {
     const rows = 4;
     const cols = 5;
-    const enemyWidth = 60;
+    const enemyWidth = 70;
     const enemyHeight = 60;
-    const gapX = 40;    // גדל את המרחק האופקי בין האויבים
-    const gapY = 40;    // גדל את המרחק האנכי בין האויבים
+    const gapX = 20;    // גדל את המרחק האופקי בין האויבים
+    const gapY = 5;    // גדל את המרחק האנכי בין האויבים
     const startX = 120; // התאם את נקודת ההתחלה האופקית
     const startY = 10;  // התחל גבוה יותר בקנבס
   
@@ -506,7 +506,12 @@ function endGame(reason) {
     scoreList.innerHTML = "";
     scores.forEach((s, i) => {
       const li = document.createElement("li");
-      li.textContent = `#${i + 1}: ${s}`;
+      li.innerHTML = `<span class="rank-num">${i + 1}.</span> <span class="score-val">${s} pts</span>`;
+
+      if (i + 1 === rank) {
+        li.classList.add("highlight-player");
+      }
+        
       scoreList.appendChild(li);
     });
     
