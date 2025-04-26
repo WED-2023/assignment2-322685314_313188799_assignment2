@@ -66,8 +66,8 @@ header {
 }
 
 main {
-  margin-left: 300px;
-  padding: 20px;
+  margin-left: 400px;
+  /* margin-right: 200px; */
   min-height: 100vh;
   overflow: hidden;
   position: relative; 
@@ -138,14 +138,14 @@ nav button.active {
   transform: scale(1);
   pointer-events: auto;
   display: block;
-  padding: 40px;
+  padding: 20px;
   margin: auto;
   max-width: 600px;
   text-align: center;
   border: 2px solid #00ffff;
   box-shadow: 0 0 15px #00ffff;
   background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
+  border-radius: 10px;
   backdrop-filter: blur(8px);
 }
 
@@ -183,7 +183,8 @@ label, .birth-row small {
 }
 
 select {
-  min-width: 87px;
+  min-width: 120px;
+  max-width: 150px;
   text-align-last: center;
 }
 
@@ -547,7 +548,6 @@ canvas {
 @media (max-width: 950px) {
   #theCanvas {
     max-width: 95vw;
-    aspect-ratio: 16 / 9;
-  }
+    aspect-ratio: 16 / 9;
+  }
 }
-

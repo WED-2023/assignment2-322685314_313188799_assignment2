@@ -56,6 +56,11 @@ function login() {
   const pass = document.getElementById("loginPass").value;
   const error = document.getElementById("loginError");
 
+  //set details in localStorage
+  localStorage.setItem("username", user);
+  const userNameKey = `score_${user}`;
+  localStorage.setItem(userNameKey, JSON.stringify([]));
+
   const found = users.find(u => u.username === user && u.password === pass);
   if (found) {
     showScreen("config");  
@@ -103,50 +108,52 @@ window.onload = function () {
   showScreen("welcome");
 };
 
+const fireKeyInput = document.getElementById("fireKey");
+const storedKey = localStorage.getItem("fireKey");
+
+// Show stored key or default to space
+if (storedKey) {
+  fireKeyInput.value = storedKey === " " ? "Space" : storedKey;
+} else {
+  // default key is space
+  fireKeyInput.value = "Space";
+  localStorage.setItem("fireKey", " ");
+}
+
+fireKeyInput.addEventListener("keydown", function(e) {
+  e.preventDefault();
+  const allowedKeys = /^[a-z0-9 ]$/i;
+
+  if (allowedKeys.test(e.key)) {
+    const keyToStore = e.key;
+    localStorage.setItem("fireKey", keyToStore);
+    this.value = keyToStore === " " ? "Space" : keyToStore;
+
+    document.getElementById("configError").textContent = "";
+  } else {
+    document.getElementById("configError").textContent = "Please enter a letter [Aa-Zz], number or space.";
+  }
+});
+
+// For time input and spaceship input:
 document.getElementById("configForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const gameTime = parseInt(document.getElementById("gameTime").value);
   const shipColor = document.getElementById("shipColor").value;
-  const allowedKeys = /^[a-z0-9 ]$/i;
-
   const configError = document.getElementById("configError");
+
   configError.textContent = "";
-
-  const input = document.getElementById("fireKey");
-  const keyMap = {
-    " ": "Space",
-  };
-  input.removeAttribute("readonly");
-  input.addEventListener("keydown", (e) => {
-    e.preventDefault(); // Prevent default behavior first
-    
-    const key = e.key;
-    const allowedKeys = /^[a-z0-9 ]$/i;
-    
-    // Check if the key is valid
-    if (allowedKeys.test(key)) {
-      // Valid key pressed
-      const displayKey = keyMap[key] || key;
-      input.value = displayKey;
-      localStorage.setItem("fireKey", key);
-      configError.textContent = "";
-    } else {
-      // Invalid key
-      configError.textContent = "Please enter a letter [Aa-Zz], numbers or space.";
-    }
-  });
-
 
   if (gameTime < 2) {
     configError.textContent = "Game duration must be at least 2 minutes.";
     return;
   }
 
-  localStorage.setItem('fireKey', fireKey);
-  localStorage.setItem('gameTime', gameTime);
-  localStorage.setItem('shipColor', shipColor);
-  document.getElementById('backgroundSound').play()
+  localStorage.setItem("gameTime", gameTime);
+  localStorage.setItem("shipColor", shipColor);
+
+  document.getElementById("backgroundSound").play();
   showScreen("game");
 });
 

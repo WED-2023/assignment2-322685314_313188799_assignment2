@@ -18,11 +18,10 @@
     <h1 id="siteTitle">Galaxa NR</h1>
   </div>
   
-  <button onclick="showScreen('welcome')">Welcome</button>
-  <button onclick="showScreen('register')">Register</button>
-  <button onclick="showScreen('login')">Login</button>
-  <button onclick="openAbout()">About</button>
-  <button onclick="showScreen('game'); document.getElementById('backgroundSound').play();">Enter Game</button>
+  <button id="btnWelcome" onclick="showScreen('welcome')">Welcome</button>
+  <button id="btnRegister" onclick="showScreen('register')">Register</button>
+  <button id="btnLogin" onclick="showScreen('login')">Login</button>
+  <button id="btnAbout" onclick="openAbout()">About</button>
 </nav>
 
 
@@ -140,12 +139,6 @@
           
           <button onclick="restartGame()">Restart</button>
         </div>
-      </div>
-
-      
-    
-      <!-- טבלת שיאים (אם צריך בעתיד) -->
-      <div id="highScores"></div>
     </div>
   </main>
 

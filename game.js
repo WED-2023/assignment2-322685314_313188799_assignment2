@@ -26,16 +26,17 @@ var context; // used for drawing on the canvas
 
 var playerLives = 3;
 var playerCurrentScore = 0; 
-
+// var playerShootKey = localStorage.getItem('fireKey') || " ";
 
 // Game timing 
 var intervalTimer; // holds interval timer
-var timeLeft = Number(localStorage.getItem('gameTime')); // the amount of time left in seconds init as wanted (in configuration step)
+var timeLeft =Number(localStorage.getItem('gameTime')) * 60; // the amount of time left in seconds init as wanted (in configuration step)
 var timeElapsed = 0; // the number of seconds elapsed
 
 var enemySpeed = 5;  // init horizontal movement speed for enemies (will increased lineraric)
 
-
+var gameOver = false;
+var gameStarted = false;
 
 // ------------ Init game's images ------------
 var MainSpaceshipImg = new Image();
@@ -81,10 +82,12 @@ switch (color) {
 
 // ------------ Start game (after all imgs loaded) ------------
 function StartGame(){
+  timeLeft = Number(localStorage.getItem('gameTime')) * 60;
   setupGame();  
   startGameTimer();
   startEnemyAcceleration(); 
   GameLoop(); 
+  gameStarted = true;
 }
 
 // ------------ SETUP ------------
@@ -148,6 +151,7 @@ function startGameTimer() {
     timeLeft--;
 
     if (timeLeft <= 0) {
+      gameOver = true;
       endGame("time");                  
     }
   }, 1000); // every seond for 60sec game
@@ -164,20 +168,6 @@ function drawEverything() {
   drawEnemyBullets();
   drawPlayerBullets();
 
-  //delete?
-
-  // Set fancy font and shadow
-  // context.font = "bold 20px 'Segoe UI', Tahoma, sans-serif";
-  // context.fillStyle = "#ffffff";
-  // context.shadowColor = "#00ffff";
-  // context.shadowBlur = 5;
-
-  // context.fillText("Score: " + playerCurrentScore, 10, 30);
-  // context.fillText("Lifes: " + playerLives, 140, 30);
-  // context.fillText("Time Left: " + timeLeft + "s", 250, 30);
-
-  // Reset shadow to avoid affecting drawings
-  //context.shadowBlur = 0;
 
 document.getElementById("score").textContent = playerCurrentScore;
 document.getElementById("lives").textContent = playerLives;
@@ -304,6 +294,7 @@ function updateEnemies() {
   let reachedLeftEdge = false;
 
   if (enemies.length <= 0){
+    gameOver= true;
     endGame("enemiesKilled");
   }
   // Check if any enemy ship reached the screen edge
@@ -349,6 +340,7 @@ function updateEnemyBullets() {
       resetPlayerShip(); 
       // Player Loses!
       if (playerLives <= 0) {
+        gameOver = true;
         endGame("lives"); 
       } 
       enemyBullets.splice(i, 1); 
@@ -449,16 +441,16 @@ let canShoot = true;
 
 // Listener for player shoot
 document.addEventListener("keydown", function(e) {
-    const fireKey = localStorage.getItem('fireKey');
-    if (e.key === fireKey) { // spacebar to shoot - change it later
-        if (canShoot){
-        shootPlayerBullet();
-        ShootSound.play();
-        canShoot = false;
-        setTimeout(() => canShoot = true, 500);
-        }
-    }
-    });
+  const playerShootKey = localStorage.getItem('fireKey') || " ";  // <-- move inside the event
+  if (e.key === playerShootKey) { 
+      if (canShoot) {
+          shootPlayerBullet();
+          ShootSound.play();
+          canShoot = false;
+          setTimeout(() => canShoot = true, 500);
+      }
+  }
+});
 
 function shootPlayerBullet() {
   const bullet = {
@@ -485,14 +477,13 @@ function GameLoop(){
 
 
 // Put this in your register/login logic
-const currentPlayerName = document.getElementById("regUser").value;
-sessionStorage.setItem("username", currentPlayerName);
-
+const currentPlayerName = localStorage.getItem("username");
 // Function to save and return score list and rank
 function saveScore() {
-    const userNameKey = "scores_" + sessionStorage.getItem("username");
-    let scores = JSON.parse(localStorage.getItem(userNameKey)) || [];
-    
+    var userNameKey = `score_${currentPlayerName}`;
+    var user_score = localStorage.getItem(userNameKey);
+    let scores = JSON.parse(user_score) || [];
+
     scores.push(playerCurrentScore);
     scores.sort((a, b) => b - a); // Sort descending
     scores = scores.slice(0, 10); // Top 10 only
@@ -502,24 +493,51 @@ function saveScore() {
     return { scores, rank: scores.indexOf(playerCurrentScore) + 1 };
 }
 
+// Function to trigger endGame on button click
+function addEndGameListeners() {
+  if (!gameStarted) {
+    return;
+}
+  const buttons = document.querySelectorAll('button');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', function() {
+      if (gameStarted && button.id === "btnWelcome" || button.id === "btnRegister" || button.id === "btnLogin" || button.id === "btnAbout") {
+        console.log("Exit button clicked:", button.id);
+        gameOver = true;
+        endGame('buttonClicked');
+      }
+    });
+  });
+}
+
+// Call the function to add listeners
+addEndGameListeners();
 
 function endGame(reason) {
+  if (!gameOver){return;}
     cancelAnimationFrame(GameLoopId); 
     context.clearRect(0, 0, canvas.width, canvas.height); 
     clearInterval(intervalTimer);
-  
+    console.log(reason);
+    // pause game sounds
+    document.getElementById("backgroundSound").pause();
+    ShootSound.pause();
+    LoseSound.pause();
+    HitSound.pause();
+
+
     let message = "";
     if (reason === "lives") {
       message = "You Lost!";
     } else if (reason === "time") {
-      if (playerCurrentScore < 100) {
-        message = "You can do better";
-      } else {
-        message = "Winner!";
-      }
+      message = playerCurrentScore < 100 ? "You can do better" : "Winner!";
     } else if (reason === "enemiesKilled") {
       message = "Champion!";
+    } else if (reason === "buttonClicked") {
+      message = "Game Ended via Button Click";
     }
+
   
     const { scores, rank } = saveScore();
   
@@ -545,11 +563,15 @@ function endGame(reason) {
   function restartGame() {
     // Hide end screen
     document.getElementById("endScreen").style.display = "none";
+
+    // וגם תאפסי את תוכן טבלת הניקוד
+    document.getElementById("scoreHistory").innerHTML = "";
     
     // Reset game variables
     playerLives = 3;
     playerCurrentScore = 0;
-    timeLeft = 60;
+    timeLeft = Number(localStorage.getItem('gameTime')) * 60;
+    gameOver = false;
     timeElapsed = 0;
     
     // Reset enemy arrays
@@ -576,6 +598,11 @@ function endGame(reason) {
     }
     
     // Rebuild the game
+    const endScreen = document.getElementById("endScreen");
+    if (endScreen) {
+      endScreen.style.display = "none";
+    }
+
     setupGame();
     startGameTimer();
     startEnemyAcceleration();
