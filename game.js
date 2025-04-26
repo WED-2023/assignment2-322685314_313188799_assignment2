@@ -30,13 +30,10 @@ var playerCurrentScore = 0;
 
 // Game timing 
 var intervalTimer; // holds interval timer
-var timeLeft =Number(localStorage.getItem('gameTime')) * 60; // the amount of time left in seconds init as wanted (in configuration step)
+var timeLeft = Number(localStorage.getItem('gameTime')) * 60; // the amount of time left in seconds init as wanted (in configuration step)
 var timeElapsed = 0; // the number of seconds elapsed
 
 var enemySpeed = 5;  // init horizontal movement speed for enemies (will increased lineraric)
-
-var gameOver = false;
-var gameStarted = false;
 
 // ------------ Init game's images ------------
 var MainSpaceshipImg = new Image();
@@ -63,6 +60,7 @@ FourthTragetImg.src = "images/BadShips/BadYellowShip.png";
 
 // Load chosen spaceship based on user input
 const color = localStorage.getItem("shipColor");
+console.log(color);
 switch (color) {
     case "red":
     MainSpaceshipImg.src = "images/MainShips/spaceship_red.png";
@@ -73,7 +71,7 @@ switch (color) {
     case "orange":
     MainSpaceshipImg.src = "images/MainShips/spaceship_orange.png";
     break;
-    case "cyan":
+    case "blue":
     default:
     MainSpaceshipImg.src = "images/MainShips/spaceship_blue.png";
     break;
@@ -87,13 +85,11 @@ function StartGame(){
   startGameTimer();
   startEnemyAcceleration(); 
   GameLoop(); 
-  gameStarted = true;
 }
 
 // ------------ SETUP ------------
 function setupGame()
 {
-  // get the canvas, its context and setup its click event handler
   canvas = document.getElementById( "theCanvas" );
     // Set fixed dimensions for the canvas
   canvas.width = 1100;
@@ -151,7 +147,6 @@ function startGameTimer() {
     timeLeft--;
 
     if (timeLeft <= 0) {
-      gameOver = true;
       endGame("time");                  
     }
   }, 1000); // every seond for 60sec game
@@ -245,15 +240,32 @@ function drawEnemyBullets() {
 // ------------ UPDATES ------------
 // For tracking user's keypress:
 const keys = {};
-document.addEventListener("keydown", e => {
+let canShoot = true;
+// שמירת הפונקציות בקבועות
+function handleKeyDown(e) {
     if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)) {
-      e.preventDefault();
+        e.preventDefault();
     }
     keys[e.key] = true;
-  });
-document.addEventListener("keyup", e => {
-keys[e.key] = false;
-});
+
+    const playerShootKey = localStorage.getItem('fireKey') || " ";
+    if (e.key === playerShootKey) { 
+        if (canShoot) {
+            shootPlayerBullet();
+            ShootSound.play();
+            canShoot = false;
+            setTimeout(() => canShoot = true, 500);
+        }
+    }
+}
+
+function handleKeyUp(e) {
+    keys[e.key] = false;
+}
+
+// רישום
+document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("keyup", handleKeyUp);
 
 function update() {
   moveMainShip();
@@ -294,7 +306,6 @@ function updateEnemies() {
   let reachedLeftEdge = false;
 
   if (enemies.length <= 0){
-    gameOver= true;
     endGame("enemiesKilled");
   }
   // Check if any enemy ship reached the screen edge
@@ -340,7 +351,6 @@ function updateEnemyBullets() {
       resetPlayerShip(); 
       // Player Loses!
       if (playerLives <= 0) {
-        gameOver = true;
         endGame("lives"); 
       } 
       enemyBullets.splice(i, 1); 
@@ -437,20 +447,6 @@ function shootEnemyBullet() {
 }
 setInterval(shootEnemyBullet, 700);
 
-let canShoot = true;
-
-// Listener for player shoot
-document.addEventListener("keydown", function(e) {
-  const playerShootKey = localStorage.getItem('fireKey') || " ";  // <-- move inside the event
-  if (e.key === playerShootKey) { 
-      if (canShoot) {
-          shootPlayerBullet();
-          ShootSound.play();
-          canShoot = false;
-          setTimeout(() => canShoot = true, 500);
-      }
-  }
-});
 
 function shootPlayerBullet() {
   const bullet = {
@@ -476,10 +472,8 @@ function GameLoop(){
 }
 
 
-// Put this in your register/login logic
-const currentPlayerName = localStorage.getItem("username");
-// Function to save and return score list and rank
 function saveScore() {
+    const currentPlayerName = localStorage.getItem("username");
     var userNameKey = `score_${currentPlayerName}`;
     var user_score = localStorage.getItem(userNameKey);
     let scores = JSON.parse(user_score) || [];
@@ -493,34 +487,22 @@ function saveScore() {
     return { scores, rank: scores.indexOf(playerCurrentScore) + 1 };
 }
 
-// Function to trigger endGame on button click
-function addEndGameListeners() {
-  if (!gameStarted) {
-    return;
-}
-  const buttons = document.querySelectorAll('button');
-
-  buttons.forEach(button => {
-    button.addEventListener('click', function() {
-      if (gameStarted && button.id === "btnWelcome" || button.id === "btnRegister" || button.id === "btnLogin" || button.id === "btnAbout") {
-        console.log("Exit button clicked:", button.id);
-        gameOver = true;
-        endGame('buttonClicked');
-      }
-    });
-  });
-}
-
-// Call the function to add listeners
-addEndGameListeners();
 
 function endGame(reason) {
-  if (!gameOver){return;}
-    cancelAnimationFrame(GameLoopId); 
-    context.clearRect(0, 0, canvas.width, canvas.height); 
-    clearInterval(intervalTimer);
-    console.log(reason);
-    // pause game sounds
+    if (GameLoopId) {
+      cancelAnimationFrame(GameLoopId);
+      GameLoopId = null;
+    }
+
+
+    if (intervalTimer) {
+      clearInterval(intervalTimer);
+      intervalTimer = null;
+    }
+
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("keyup", handleKeyUp);
+
     document.getElementById("backgroundSound").pause();
     ShootSound.pause();
     LoseSound.pause();
@@ -563,15 +545,11 @@ function endGame(reason) {
   function restartGame() {
     // Hide end screen
     document.getElementById("endScreen").style.display = "none";
-
-    // וגם תאפסי את תוכן טבלת הניקוד
-    document.getElementById("scoreHistory").innerHTML = "";
     
     // Reset game variables
     playerLives = 3;
     playerCurrentScore = 0;
     timeLeft = Number(localStorage.getItem('gameTime')) * 60;
-    gameOver = false;
     timeElapsed = 0;
     
     // Reset enemy arrays
@@ -597,15 +575,12 @@ function endGame(reason) {
       cancelAnimationFrame(GameLoopId);
     }
     
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+    
     // Rebuild the game
-    const endScreen = document.getElementById("endScreen");
-    if (endScreen) {
-      endScreen.style.display = "none";
-    }
-
     setupGame();
     startGameTimer();
     startEnemyAcceleration();
     GameLoop();
   }
-  
