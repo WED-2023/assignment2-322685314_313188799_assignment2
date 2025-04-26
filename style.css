@@ -1,9 +1,9 @@
-*, *::before, *::after {
+/* *, *::before, *::after {
   box-sizing: border-box;
 }
 html, body {
-  width: 100vw;
-  height: 100vh;
+  width: 1366px;
+  height: 768px;
   overflow: hidden; 
   font-family: 'Orbitron', sans-serif;
 }
@@ -15,25 +15,26 @@ button {
   font-family: 'Orbitron', sans-serif !important;
 }
 
+
 body {
   margin: 0;
   padding: 0;
-  padding-top: 5vh;  
+  padding-top: 60px;  
   background-image: url('/images/Base/background.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: #ffffff;
-  min-width: 100vw;
-  min-height: 100vh;
+  min-width: 1366px;
+  min-height: 768px;
 }
 
 header {
   background-color: transparent;
-  padding: 1.5vh;
+  padding: 1.2em;
   text-align: center;
-  font-size: 2vw;
-  text-shadow: 0 0 0.5vw #3399cc;
+  font-size: 1.5em;
+  text-shadow: 0 0 5px #3399cc;
 }
 
 .header-container {
@@ -44,12 +45,13 @@ header {
 }
 
 #logo {
-  width: 7vw;
+  width: 100px;
   height: auto;
-  border-radius: 0.8vw;
-  margin-bottom: 0.8vh;
+  border-radius: 10px;
+  margin-bottom: 8px;
   transition: transform 0.6s ease-in-out;
 }
+
 
 #logo.animate {
   transform: rotate(360deg);
@@ -57,14 +59,15 @@ header {
 
 #siteTitle {
   color: #66ccff;
-  font-size: 1.5vw;
+  font-size: 1.2em;
   text-align: center;
   margin: 0;
-  line-height: 1.5em;
+  line-height: 1.2em;
 }
 
 main {
-  margin-left: 25vw;
+  margin-left: 300px;
+  padding: 20px;
   min-height: 100vh;
   overflow: hidden;
   position: relative; 
@@ -74,14 +77,14 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  width: 22vw;
+  width: 300px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 2vh;
-  padding-top: 8vh;
+  gap: 15px;
+  padding-top: 60px;
   background-color: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(6px);
   overflow-y: auto;
@@ -91,12 +94,12 @@ nav {
 nav button {
   background-color: rgba(0, 0, 0, 0.4);
   color: #66ccff;
-  padding: 1.5vh 2vw;
-  border: 0.1vw solid #005577;
-  margin: 0 0.5vw;
-  border-radius: 2vw;
+  padding: 12px 18px;
+  border: 1px solid #005577;
+  margin: 0 5px;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 1vw;
+  font-size: 1em;
   transition: all 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
@@ -104,21 +107,23 @@ nav button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 3vh;
+  margin-bottom: 20px;
 }
 
 nav button:hover {
   background-color: rgba(0, 85, 119, 0.4);
   color: #ffffff;
-  box-shadow: 0 0 1vw #66ccff, 0 0 2vw #66ccff inset;
+  box-shadow: 0 0 12px #66ccff, 0 0 20px #66ccff inset;
   transform: scale(1.05);
 }
 
+
 nav button.active {
   background-color: rgba(0, 85, 119, 0.5);
-  box-shadow: 0 0 1vw #00ffff;
+  box-shadow: 0 0 10px #00ffff;
   color: white;
 }
+
 
 .screen {
   opacity: 0;
@@ -127,30 +132,31 @@ nav button.active {
   pointer-events: none;
 }
 
+
 .screen:not(.hidden) {
   opacity: 1;
   transform: scale(1);
   pointer-events: auto;
   display: block;
-  padding: 2vh;
+  padding: 40px;
   margin: auto;
-  max-width: 50vw;
+  max-width: 600px;
   text-align: center;
-  border: 0.2vw solid #00ffff;
-  box-shadow: 0 0 1.5vw #00ffff;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 15px #00ffff;
   background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 1vw;
+  border-radius: 12px;
   backdrop-filter: blur(8px);
 }
 
 input, select, button {
   display: block;
-  margin: 2vh auto;
-  padding: 1.5vh 2vw;
+  margin: 12px auto;
+  padding: 12px;
   width: 80%;
-  max-width: 30vw;
-  border-radius: 1vw;
-  border: 0.1vw solid #005577;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 1px solid #005577;
   font-size: 1em;
   background-color: rgba(0, 0, 0, 0.5);
   color: #66ccff;
@@ -177,10 +183,10 @@ label, .birth-row small {
 }
 
 select {
-  min-width: 10vw;
-  max-width: 12vw;
+  min-width: 87px;
   text-align-last: center;
 }
+
 
 .modal {
   position: fixed;
@@ -198,12 +204,12 @@ select {
 
 .modal-content {
   background-color: rgba(0, 0, 30, 0.95);
-  border: 0.2vw solid #00ffff;
-  box-shadow: 0 0 2vw #00ffff;
-  border-radius: 1vw;
-  padding: 3vh 4vw;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px #00ffff;
+  border-radius: 12px;
+  padding: 30px 40px;
   width: 90%;
-  max-width: 35vw;
+  max-width: 500px;
   color: #66ccff;
   text-align: center;
   position: relative;
@@ -211,29 +217,29 @@ select {
 
 .modal-content h2 {
   margin-top: 0;
-  margin-bottom: 2vh;
+  margin-bottom: 15px;
   color: #00ffff;
   font-size: 1.8em;
-  text-shadow: 0 0 0.5vw #00ffff;
+  text-shadow: 0 0 5px #00ffff;
 }
 
 .modal-content ul {
   list-style: none;
   padding: 0;
-  margin-top: 1vh;
+  margin-top: 10px;
   text-align: left;
 }
 
 .modal-content li::before {
   content: "🚀 ";
-  margin-right: 0.5vw;
+  margin-right: 5px;
 }
 
 .close-btn {
   position: absolute;
-  top: 1vh;
-  right: 1vw;
-  font-size: 2vw;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
   font-weight: bold;
   color: #66ccff;
   cursor: pointer;
@@ -242,51 +248,45 @@ select {
 
 .close-btn:hover {
   color: white;
-  text-shadow: 0 0 0.5vw #00ffff;
+  text-shadow: 0 0 5px #00ffff;
 }
 
 .hidden {
   display: none;
 }
 
-
-
-
-
-
-
-
 #config label {
   display: block;
-  margin-top: 1vh;
+  margin-top: 10px;
   color: #66ccff;
   font-weight: bold;
   text-align: left;
   width: 80%;
-  max-width: 30vw;
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto;
 }
 
 #config input, #config select {
   display: block;
-  margin: 1vh auto;
-  padding: 1.5vh 2vw;
+  margin: 10px auto;
+  padding: 10px;
   width: 80%;
-  max-width: 30vw;
-  border-radius: 1vw;
+  max-width: 400px;
+  border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   color: #66ccff;
-  border: 0.1vw solid #00ffff;
+  border: 1px solid #00ffff;
 }
+
 
 footer {
   background-color: transparent;
   color: #66ccff;
   text-align: center;
-  padding: 1vh;
-  font-size: 1em;
-  text-shadow: 0 0 0.8vw #3399cc;
+  padding: 1em;
+  font-size: 0.9em;
+  text-shadow: 0 0 8px #3399cc;
   position: relative;
   bottom: 0;
   width: 100%;
@@ -298,11 +298,6 @@ footer {
   font-weight: bold;
 }
 
-
-
-
-
-
 /* Game Style: */
 /* Game End Screen Style */
 #endScreen {
@@ -311,12 +306,12 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 30, 0.95);
-  border: 0.2vw solid #00ffff;
-  box-shadow: 0 0 2vw #00ffff;
-  border-radius: 1vw;
-  padding: 3vh 4vw;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px #00ffff;
+  border-radius: 12px;
+  padding: 30px 40px;
   width: 90%;
-  max-width: 35vw;
+  max-width: 500px;
   color: #66ccff;
   text-align: center;
   z-index: 10;
@@ -327,38 +322,41 @@ footer {
 #endContent.end-box {
   text-align: center;
   background-color: rgba(0, 0, 30, 0.95);
-  padding: 2vh 2vw;
-  border-radius: 1vw;
+  padding: 20px;
+  border-radius: 10px;
   color: #66ccff;
   width: 100%;
-  max-width: 35vw;
+  max-width: 500px;
   margin: 0 auto;
 }
+
 
 /* הודעת ניצחון/הפסד + ציון */
 #endMessage,
 #endScore {
   color: #ffffff;
   font-family: 'Orbitron', sans-serif;
-  margin: 1vh 0;
+  margin: 10px 0;
   font-size: 1.2em;
 }
 
 .end-summary {
-  border: 0.2vw solid #00ffff;
-  border-radius: 1vw;
-  padding: 2vh 2vw;
-  margin-bottom: 3vh;
+  border: 2px solid #00ffff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
   background: linear-gradient(145deg, rgba(0, 0, 30, 0.8), rgba(0, 30, 60, 0.8));
   box-shadow:
-    0 0 1vw #00ffffaa,
-    inset 0 0 1vw #00ffff33,
-    0 0.8vw 1.6vw rgba(0, 255, 255, 0.2);
+    0 0 10px #00ffffaa,
+    inset 0 0 10px #00ffff33,
+    0 8px 16px rgba(0, 255, 255, 0.2);
   color: #66ccff;
   font-family: 'Orbitron', sans-serif;
-  text-shadow: 0 0 0.5vw #00ffff;
+  text-shadow: 0 0 5px #00ffff;
   backdrop-filter: blur(4px);
 }
+
+
 
 /* טקסטים בתוך endContent שמעל טבלת השיאים */
 #endContent.end-box h2,
@@ -367,6 +365,7 @@ footer {
 #endContent.end-box ul {
   color: #66ccff;
 }
+
 
 /* טבלת השיאים */
 #scoreHistory {
@@ -382,15 +381,17 @@ footer {
   color: #ffffff;
 }
 
+
+
 #scoreHistory li::before {
   content: "⭐ ";
-  margin-right: 0.5vw;
+  margin-right: 5px;
   color: #00ffff;
 }
 #scoreHistory .rank-num {
   color: #00ffff;
   font-weight: bold;
-  margin-right: 0.5vw;
+  margin-right: 6px;
   font-size: 1.05em;
 }
 
@@ -399,52 +400,64 @@ footer {
   font-weight: 400;
 }
 #scoreHistory .highlight-player {
-  border: 0.2vw solid #ffd700;
+  border: 2px solid #ffd700;
   background-color: rgba(255, 215, 0, 0.1);
-  box-shadow: 0 0 1vw #ffd700aa;
+  box-shadow: 0 0 10px #ffd700aa;
   transform: scale(1.02);
 }
 
+
 /* כפתור ריסטארט */
 #endScreen button {
-  margin: 3vh auto 0 auto;
-  padding: 1vh 2vw;
+  margin: 2rem auto 0 auto; /* מרווח גדול מלמעלה, ממורכז */
+  padding: 0.6rem 1.4rem;
   background-color: #7EC8E3;
   border: none;
-  border-radius: 1vw;
+  border-radius: 12px;
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
   font-family: 'Orbitron', sans-serif;
   color: #000;
   display: block;
-  box-shadow: 0 0 1vw #00ffff44;
+  box-shadow: 0 0 10px #00ffff44;
   transition: 0.3s ease;
 }
 
 #endScreen button:hover {
   background-color: #5aaed6;
   color: white;
-  box-shadow: 0 0 1.2vw #00ffff, 0 0 2vw #00ffff inset;
+  box-shadow: 0 0 12px #00ffff, 0 0 20px #00ffff inset;
 }
 
+
+#endScreen button:hover {
+  background-color: #5aaed6;
+  color: white;
+  box-shadow: 0 0 10px #00ffff;
+}
+
+/* כותרת למסך המשחק */
 #game h2 {
   color: #00ffff;
-  text-shadow: 0 0 0.2vw #00ffff, 0 0 0.5vw #00ffff;
+  text-shadow: 0 0 2px #00ffff, 0 0 5px #00ffff;
   font-size: 2.2em;
-  margin-bottom: 1vh;
-  letter-spacing: 0.1vw;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
   font-family: 'Orbitron', sans-serif;
 }
 
+/* אנימציית זוהר */
 @keyframes pulseGlow {
   0%, 100% {
-    text-shadow: 0 0 0.8vw #00ffff, 0 0 2vw #00ffff;
+    text-shadow: 0 0 8px #00ffff, 0 0 20px #00ffff;
   }
   50% {
-    text-shadow: 0 0 1.2vw #00ffff, 0 0 2.5vw #00ffff;
+    text-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
   }
 }
+
+
 
 #game.screen:not(.hidden) {
   display: flex;
@@ -452,21 +465,21 @@ footer {
   align-items: center;
   justify-content: flex-start;
   height: 100%;
-  max-width: 60vw;
+  max-width: 860px;
   margin: auto;
-  padding: 1vh;
-  box-shadow: none;
+  padding: 10px;
+  box-shadow: none; /* ביטול מסגרת נוספת */
   border: none;
 }
 
 .game-stats-panel {
   display: flex;
   justify-content: center;
-  gap: 6vw;
-  margin-top: 2vh;
+  gap: 60px;
+  margin-top: 20px;
   color: #66ccff;
   font-family: 'Orbitron', sans-serif;
-  text-shadow: 0 0 0.5vw #00ffff;
+  text-shadow: 0 0 5px #00ffff;
 }
 
 .stat-block {
@@ -479,24 +492,32 @@ footer {
 
 .stat-block .value {
   font-size: 1.5em;
-  color: #ffffff;
+  color: #ffffff;                /* צבע לבן */
   font-weight: bold;
 }
 
+
+/* Player Bullet */
 .player-bullet {
-  width: 0.5vw;
-  height: 1.5vh;
+  width: 6px;
+  height: 15px;
   background: linear-gradient(to top, #66ccff, #ffffff);
-  box-shadow: 0 0 0.8vw #66ccff;
-  border-radius: 0.3vw;
+  box-shadow: 0 0 8px #66ccff;
+  border-radius: 3px;
 }
 
+/* Enemy Bullet */
 .enemy-bullet {
-  width: 0.5vw;
-  height: 1.5vh;
+  width: 6px;
+  height: 15px;
   background: linear-gradient(to bottom, #ff4444, #ffaaaa);
-  box-shadow: 0 0 0.8vw #ff0000;
-  border-radius: 0.3vw;
+  box-shadow: 0 0 8px #ff0000;
+  border-radius: 3px;
+}
+
+canvas {
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 .canvas-container {
@@ -504,27 +525,28 @@ footer {
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 1vw;
-  box-shadow: 0 0 1.2vw #00ffff;
-  padding: 1vh;
-  margin-top: 1vh;
+  border-radius: 10px;
+  box-shadow: 0 0 12px #00ffff;
+  padding: 10px;
+  margin-top: 10px;
 }
 
 #theCanvas {
   width: 95%;
-  max-width: 70vw;
+  max-width: 1000px;
   height: auto;
   aspect-ratio: 16 / 9;
-  border-radius: 0.8vw;
-  border: 0.1vw solid #00ffff;
+  border-radius: 8px;
+  border: 1px solid #00ffff;
   background-color: #000;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
 }
 
+
 @media (max-width: 950px) {
   #theCanvas {
     max-width: 95vw;
-    aspect-ratio: 16 / 9;
-  }
-}
+    aspect-ratio: 16 / 9;
+  }
+} 
