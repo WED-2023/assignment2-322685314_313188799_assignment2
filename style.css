@@ -2,8 +2,8 @@
   box-sizing: border-box;
 }
 html, body {
-  width: 1366px;
-  height: 768px;
+  /* width: 1366px;
+  height: 768px; */
   overflow: hidden; 
   font-family: 'Orbitron', sans-serif;
 }
