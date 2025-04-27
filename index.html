@@ -7,7 +7,6 @@
   <title>Galaxa NR</title>
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
-  <script src="game.js" defer></script>
 </head>
 
 <body>
@@ -74,37 +73,31 @@
     </div>
 
  <!-- Configuration -->
-    <div id="config" class="screen hidden">
-      <h2>Game Configuration</h2>
-      <form id="configForm">
-        <label for="fireKey">Choose fire key (Aa–Zz, number or space):</label>
-        <input type="text" id="fireKey" maxlength="1" placeholder="e.g. F or space" required />
+  <div id="config" class="screen hidden">
+    <h2>Game Configuration</h2>
+    <label for="fireKey">Choose fire key (Aa–Zz, number or space):</label>
+    <input type="text" id="fireKey" maxlength="1" placeholder="e.g. F or space" required />
     
-        <label for="gameTime">Game duration (minutes):</label>
-        <input type="number" id="gameTime" min="2" max="10" value="2" required />
+    <label for="gameTime">Game duration (minutes):</label>
+    <input type="number" id="gameTime" min="2" max="10" value="2" required />
     
-        <label for="shipColor">Choose spaceship color:</label>
-        <select id="shipColor">
-          <option value="blue">Blue</option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-          <option value="orange">Orange</option>
-        </select>
-        <p id="configError" class="error"></p>
-        <button type="submit">Start Game</button>
-      </form>
-    </div>
+    <label for="shipColor">Choose spaceship color:</label>
+    <select id="shipColor">
+      <option value="blue">Blue</option>
+      <option value="red">Red</option>
+      <option value="green">Green</option>
+      <option value="orange">Orange</option>
+    </select>
+
+    <p id="configError" class="error"></p>
+    <button id="startButton">Start Game</button>
+  </div>
+
     
  <!-- Game -->
     <div id="game" class="screen hidden">
       <h2>Welcome to the Game!</h2>
-    
-      <!-- Sounds -->
-      <audio id="loseSound" src="Sounds/lose.mp3"></audio>
-      <audio id="shootSound" src="Sounds/shoot.mp3"></audio>
-      <audio id="hitSound" src="Sounds/hit.mp3"></audio>
-      <audio id="backgroundSound" src="Sounds/background.mp3" loop></audio>
-    
+      
       <!-- Canvas -->
       <div class="canvas-container">
         <canvas id="theCanvas"></canvas>
@@ -138,6 +131,7 @@
           <ul id="scoreHistory" class="scoreHistory"></ul>
           
           <button onclick="restartGame()">Restart</button>
+          <button onclick="restartGame_andHome()">Back to Home Page</button>
         </div>
     </div>
   </main>
