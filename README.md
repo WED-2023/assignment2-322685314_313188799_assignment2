@@ -1,6 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/C1S6S1cK)
 # Welcome to Glaxa NR 🚀
-By Ravit Cohen (313188799) and Natallie Mirelashvili (Natallie Mirelashvili)
+By Ravit Cohen (313188799) and Natallie Mirelashvili (322685314)
 
 [Click here to play Glaxa NR!](https://wed-2023.github.io/assignment2-322685314_313188799_assignment2/)
 
