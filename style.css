@@ -18,7 +18,7 @@ body {
   margin: 0;
   padding: 0;
   padding-top: 60px;  
-  background: url('images/Base/background.jpg') no-repeat center center fixed;
+  background: url('images/Base/background.png') no-repeat center center fixed;
     background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -66,9 +66,9 @@ header {
 main {
   margin-left: 300px;
   padding: 20px;
-  min-height: 100vh;
+  min-height: calc(100vh - 150px); 
   overflow: hidden;
-  position: relative; 
+  position: relative;
 }
 
 nav {
@@ -123,14 +123,6 @@ nav button.active {
 }
 
 
-.screen {
-  opacity: 0;
-  transform: scale(0.98);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  pointer-events: none;
-}
-
-
 .screen:not(.hidden) {
   opacity: 1;
   transform: scale(1);
@@ -181,7 +173,7 @@ label, .birth-row small {
 }
 
 select {
-  min-width: 87px;
+  min-width: 100px;
   text-align-last: center;
 }
 
@@ -206,12 +198,15 @@ select {
   box-shadow: 0 0 20px #00ffff;
   border-radius: 12px;
   padding: 30px 40px;
-  width: 90%;
-  max-width: 500px;
+  width: 80%;          
+  max-width: 800px;       
+  height: 600px;          
+  overflow-y: auto;       
   color: #66ccff;
   text-align: center;
   position: relative;
 }
+
 
 .modal-content h2 {
   margin-top: 0;
@@ -231,6 +226,10 @@ select {
 .modal-content li::before {
   content: "🚀 ";
   margin-right: 5px;
+}
+
+.modal-content p {
+  text-align: left;
 }
 
 .close-btn {
@@ -279,16 +278,26 @@ select {
 
 
 footer {
-  background-color: transparent;
+  position: absolute;
+  left: 300px;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-top: 1px solid #66ccff88;  /* קו הפרדה חצי שקוף */
   color: #66ccff;
-  text-align: center;
-  padding: 1em;
   font-size: 0.9em;
   text-shadow: 0 0 8px #3399cc;
-  position: relative;
-  bottom: 0;
-  width: 100%;
 }
+
+
+
+
+
+
 
 .error {
   color: #ff5555;
@@ -296,6 +305,11 @@ footer {
   font-weight: bold;
 }
 
+.success {
+  color: #00ff00;
+  text-align: center;
+  font-weight: bold;
+}
 /* Game Style: */
 /* Game End Screen Style */
 #endScreen {
@@ -310,6 +324,7 @@ footer {
   padding: 30px 40px;
   width: 90%;
   max-width: 500px;
+  min-height: 600px;
   color: #66ccff;
   text-align: center;
   z-index: 10;
@@ -405,9 +420,8 @@ footer {
 }
 
 
-/* כפתור ריסטארט */
 #endScreen button {
-  margin: 2rem auto 0 auto; /* מרווח גדול מלמעלה, ממורכז */
+  margin: 2rem auto 0 auto; 
   padding: 0.6rem 1.4rem;
   background-color: #7EC8E3;
   border: none;
@@ -536,7 +550,12 @@ canvas {
   aspect-ratio: 16 / 9;
   border-radius: 8px;
   border: 1px solid #00ffff;
-  background-color: #000;
+  background-image:
+  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), /* שכבת שחור שקוף 40% */
+  url('images/Base/backgroundcanvas.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
 }

@@ -5,10 +5,32 @@ function showScreen(screenId) {
   const next = document.getElementById(screenId);
   next.classList.remove("hidden");
 
+  const nav = document.querySelector('nav');
+  const navButtons = nav.querySelectorAll('button');
+  const restartButton = document.getElementById('restartButton');
+
+  if (screenId === 'game') {
+    navButtons.forEach(button => button.style.display = 'none');
+
+    if (restartButton) {
+      nav.appendChild(restartButton);
+      restartButton.style.display = 'block';
+    }
+  } else {
+    navButtons.forEach(button => button.style.display = 'block');
+
+    const gameScreen = document.getElementById('game');
+    if (restartButton && !gameScreen.contains(restartButton)) {
+      gameScreen.appendChild(restartButton);
+      restartButton.style.display = 'block';
+    }
+  }
+
   const logo = document.getElementById("logo");
   logo.classList.add("animate");
   setTimeout(() => logo.classList.remove("animate"), 600);
 }
+
 
 
 function validateRegistration() {
@@ -45,7 +67,9 @@ function validateRegistration() {
 
   users.push({ username: user, password: pass });
   errorElement.textContent = "Registration successful!";
-  showScreen('login');
+  errorElement.classList.remove("error");
+  errorElement.classList.add("success");
+    showScreen('login');
   return false;
 }
 
@@ -158,7 +182,7 @@ function getUserConfiguration(event) {
     const errorParagraph = document.getElementById('configError');
 
     // shootKey = fireKeyInput.value;
-    gameTime = parseInt(gameTimeInput.value, 10) * 60; //for seconds
+    gameTime = parseInt(gameTimeInput.value, 10); //for seconds
     spaceshipColor = shipColorSelect.value;
 
     errorParagraph.textContent = '';
@@ -173,6 +197,7 @@ function getUserConfiguration(event) {
       errorParagraph.textContent = "Game time must be at least 2 minutes.";
       return false;
   }
+  gameTime = gameTime * 60;
 
   if (!spaceshipColor) {
       errorParagraph.textContent = "You must select a spaceship color.";
@@ -272,7 +297,7 @@ function update() {
 
 function updatePlayer() {
   if (GameOver) return;
-  const moveAreaHeight = canvas.height * 0.5; 
+  const moveAreaHeight = canvas.height * 0.4; 
   const topLimit = canvas.height - moveAreaHeight;
 
   if (keys["ArrowLeft"] && player.x > 0) {
@@ -419,7 +444,7 @@ function shootEnemyBullet() {
   const bullet = {
     x: randomEnemy.x + randomEnemy.width / 2 - 2,
     y: randomEnemy.y + randomEnemy.height,
-    width: 4,
+    width: 10,
     height: 10,
     speed: 2 + enemySpeed * 0.5 // regard to enemy's speed
   };
@@ -446,7 +471,7 @@ function shootPlayerBullet() {
 
 function resetPlayerShip() {
   if (GameOver) return;
-  player = {x : (canvas.width / 2) - 50, y : canvas.height * 0.8, width : 50, height : 50, speed : 10};
+  player = {x : (canvas.width / 2) - 50, y : canvas.height * 0.87, width : 70, height : 80, speed : 10};
 }
 
 function isColliding(rect1, rect2) {
@@ -594,10 +619,10 @@ function startEnemies() {
   const cols = 5;
   const enemyWidth = 70;
   const enemyHeight = 60;
-  const gapX = 20;    // גדל את המרחק האופקי בין האויבים
-  const gapY = 5;    // גדל את המרחק האנכי בין האויבים
-  const startX = 120; // התאם את נקודת ההתחלה האופקית
-  const startY = 10;  // התחל גבוה יותר בקנבס
+  const gapX = 20;   
+  const gapY = 5;    
+  const startX = 120;
+  const startY = 10;  
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -616,47 +641,36 @@ function startEnemies() {
 // Start the Game
 function startGame() {
   if (GameOver) return;
-  console.log("start game");
   if (GameLoopId) {
     cancelAnimationFrame(GameLoopId);
     GameLoopId = null;
   }
 
   showScreen('game');
-  console.log("back sound");
 
   backgoundSound.play();
   window.scrollTo(0, 0);
 
-  console.log("init player");
-  player = {x : (canvas.width / 2) - 50, y : canvas.height * 0.8, width : 50, height : 50, speed : 10};
-  console.log("init enemies");
+  player = {x : (canvas.width / 2) - 50, y : canvas.height * 0.87, width : 70, height : 80, speed : 10};
   startEnemies();
 
-  console.log("init listers");
   //add event listers
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
 
-  console.log("init interval");
   // Every 5 Secound calls the function to increase enemy speed
   enemySpeedInterval = setInterval(increaseEnemySpeed, 5000);
   // Every 7 Secound enemy shoots
   enemyShootInterval = setInterval(shootEnemyBullet, 700);
 
   StartTimer();
-  console.log("start game loop");
   gameLoop();
 }
 
-
-// Gane Over Screen
-function endGame(reason) {
-  console.log(reason);
+function deConnectGame (){
   if (GameLoopId) {
     cancelAnimationFrame(GameLoopId);
     GameLoopId = null;
-    console.log("cancel animation")
   }  
 
   // clear intervals
@@ -669,7 +683,11 @@ function endGame(reason) {
   // remove event listenrs
   document.removeEventListener("keydown", handleKeyDown);
   document.removeEventListener("keyup", handleKeyUp);
+}
 
+// Gane Over Screen
+function endGame(reason) {
+  deConnectGame()
   // current game rank msg
   let message = "";
     if (reason === "lives") {
@@ -682,12 +700,10 @@ function endGame(reason) {
       message = "Game Ended via Button Click";
     }
 
-
   const messageElement = document.getElementById('endMessage');
   messageElement.innerText = message;
 
   document.getElementById('endScore').innerText = playerCurrentScore;
-
 
   // Save the current game result
   let current = {
@@ -723,8 +739,8 @@ function renderHighScores() {
   highScores.forEach((entry, i) => {
     const li = document.createElement("li");
     li.innerHTML = `<span class="rank-num">${i + 1}.</span> <span class="score-val">${entry.score} pts</span>`;
-
-    if (i + 1 === entry.rank) {
+    
+    if (entry.score === playerCurrentScore) {
       li.classList.add("highlight-player");
     }
     // add current score to list
@@ -745,6 +761,14 @@ function restartGame_andHome(){
     resetGame();
     resetConfigurationScreen();
     showScreen('welcome');
+}
+
+function restartGameWhilePlayng(){
+  deConnectGame();
+  resetGame();
+  resetConfigurationScreen();
+  showScreen('config');
+
 }
 
 // Restart the game

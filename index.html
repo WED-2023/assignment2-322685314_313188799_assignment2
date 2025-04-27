@@ -10,17 +10,18 @@
 </head>
 
 <body>
-  <!-- MENU -->
+  <!-- Header -->
 <nav>
   <div class="nav-header">
     <img src="images/Base/logo.jpeg" alt="Galaxa NR Logo" style="width: 130px; margin-bottom: 15px;">
     <h1 id="siteTitle">Galaxa NR</h1>
   </div>
   
+  <!-- MENU -->
   <button id="btnWelcome" onclick="showScreen('welcome')">Welcome</button>
   <button id="btnRegister" onclick="showScreen('register')">Register</button>
   <button id="btnLogin" onclick="showScreen('login')">Login</button>
-  <button id="btnAbout" onclick="openAbout()">About</button>
+  <button id="btnAbout" onclick="openAbout('about')">About</button>
 </nav>
 
 
@@ -30,7 +31,8 @@
       <img id="logo" src="images/Base/logo.jpeg" alt="Galaxa Logo" />
       <h2>Welcome to Galaxa NR!</h2>
       <p>Name: Ravit Cohen | ID: 313188799</p>
-      <p>Name: Natalie Mirelashvili| ID: 322685314</p>
+      <p>Name: Natalie Mirelashvili | ID: 322685314</p>
+      <p><a href="https://wed-2023.github.io/assignment2-322685314_313188799_assignment2/" target="_blank">Link To Our Website</a></p>
       <button onclick="showScreen('register')">Register</button>
       <button onclick="showScreen('login')">Login</button>
     </div>
@@ -75,8 +77,9 @@
  <!-- Configuration -->
   <div id="config" class="screen hidden">
     <h2>Game Configuration</h2>
-    <label for="fireKey">Choose fire key (Aa–Zz, number or space):</label>
+    <label for="fireKey">Choose fire key (Aa–Zz or space):</label>
     <input type="text" id="fireKey" maxlength="1" placeholder="e.g. F or space" required />
+    <small style="color: #66ccff;">Default: Space key will be used if none selected.</small>
     
     <label for="gameTime">Game duration (minutes):</label>
     <input type="number" id="gameTime" min="2" max="10" value="2" required />
@@ -118,8 +121,9 @@
         </div>
       </div>      
       
+      <button id="restartButton" onclick="restartGameWhilePlayng()">Restart</button>
 
-      <!-- מסך סיום המשחק -->
+      <!-- End Game -->
       <div id="endScreen" style="display: none;">
         <div id="endContent" class="end-box">
           <div class="end-summary">
@@ -129,27 +133,54 @@
 
           <h3>High Scores: 🏆🔥</h3>
           <ul id="scoreHistory" class="scoreHistory"></ul>
-          
           <button onclick="restartGame()">Restart</button>
           <button onclick="restartGame_andHome()">Back to Home Page</button>
         </div>
     </div>
   </main>
-
+  
   <!-- ABOUT -->
   <div id="aboutModal" class="modal hidden">
     <div class="modal-content">
       <span class="close-btn" onclick="closeAbout()">&times;</span>
       <h2>About This Project</h2>
+
       <p><strong>Submitted by:</strong> Ravit Cohen & Natalie Mirelashvili</p>
-      <p><strong>Template used:</strong> !!!complete!!!</p>
-      <p><strong>jQuery plugin used:</strong> !!!complete!!!</p>
-      <p><strong>Challenges:</strong></p>
+
+      <p><strong>Template used:</strong> Basic Game Development Template with HTML5 Canvas and Vanilla JavaScript</p>
+
+      <p><strong>jQuery plugin used:</strong> No (All functionality was implemented using pure JavaScript)</p>
+
+      <p><strong>Game Features Implemented:</strong></p>
       <ul>
-        <li>!!!complete!!!</li>
+        <li>Timer showing remaining game time during gameplay.</li>
+        <li>Spaceship fires special blue bullets (different shot styling).</li>
+        <li>Additional penalties: losing lives when hit by enemy bullets.</li>
+        <li>Enemy ships increase speed and aggressiveness over time.</li>
+        <li>Win condition based on defeating all enemies or scoring over 100 points.</li>
+      </ul>
+
+      <p><strong>Game Instructions:</strong></p>
+      <p>Welcome to Glaxa NR!  
+      Register and log in to start. Choose your weapon key (a letter or spacebar), set the game time (minimum 2 minutes), and pick your spaceship color.<br>
+      During the game, you’ll see a timer countdown and your current score. Your lives are displayed at all times, so be careful!<br>
+      Enemy ships are organized by color in each row, with their bullets being fiery red. Your hero spaceship fires electric blue bullets.<br>
+      The farther the ship, the more points you earn (5–20 points).<br>
+      As time passes, enemies become faster and more aggressive!<br>
+      Win by defeating all enemies or aim for 100+ points before time runs out.<br>
+      If you lose all lives, the game ends automatically.<br>
+      At the end of the game, you can restart by clicking the “Restart” button to play again with the same or different configuration settings.
+      </p>
+
+      <p><strong>Challenges during development:</strong></p>
+      <ul>
+        <li>Managing game restart properly: resetting parameters, scores, characters, and event listeners without reloading the page.</li>
+        <li>Handling animation cycles using <code>requestAnimationFrame</code> correctly and restarting the game loop safely.</li>
+        <li>Ensuring smooth and responsive gameplay at all times, even when the game restarts multiple times.</li>
       </ul>
     </div>
-  </div>  
+  </div>
+
   
   <!-- FOOTER -->
   <footer>
