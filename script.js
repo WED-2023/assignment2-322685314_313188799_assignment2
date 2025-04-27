@@ -1,9 +1,5 @@
-// init users array with default user creds
+const users = JSON.parse(localStorage.getItem('users')) || [{ username: "p", password: "testuser" }];
 
-let users = [{
-            username: "p",
-            password: "testuser"
-          }]
 function showScreen(screenId) {
   document.querySelectorAll(".screen").forEach(div => div.classList.add("hidden"));
   const next = document.getElementById(screenId);
@@ -47,45 +43,28 @@ function validateRegistration() {
     return false;
   }
 
-  users.push({
-    username: user,
-    password: pass
-  });
-
-  console.log(users);
+  users.push({ username: user, password: pass });
   errorElement.textContent = "Registration successful!";
   showScreen('login');
-  return true;
+  return false;
 }
 
-// catch current user username and history list
 let currentUser;
 let highScores;
 function login() {
-  console.log(users);
-
   const user = document.getElementById("loginUser").value;
   const pass = document.getElementById("loginPass").value;
   const error = document.getElementById("loginError");
-  console.log(users.length);
 
-  let found = false;
-
-  for (let i = 0; i < users.length; i++) {
-      if (users[i].username === user && users[i].password === pass) {
-          found = true;
-          break;
-      }
-  }
-
+  const found = users.find(u => u.username === user && u.password === pass);
   if (found) {
-    currentUser = user;
-    highScores = [];
     showScreen("config");  
     error.textContent = "";
   } else {
     error.textContent = "Incorrect username or password.";
   }
+  currentUser = user;
+  highScores = [];
 }
 
 function openAbout() {
