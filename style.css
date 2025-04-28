@@ -13,7 +13,6 @@ button {
   font-family: 'Orbitron', sans-serif !important;
 }
 
-
 body {
   margin: 0;
   padding: 0;
@@ -49,7 +48,6 @@ header {
   margin-bottom: 8px;
   transition: transform 0.6s ease-in-out;
 }
-
 
 #logo.animate {
   transform: rotate(360deg);
@@ -116,13 +114,11 @@ nav button:hover {
   transform: scale(1.05);
 }
 
-
 nav button.active {
   background-color: rgba(0, 85, 119, 0.5);
   box-shadow: 0 0 10px #00ffff;
   color: white;
 }
-
 
 .screen:not(.hidden) {
   opacity: 1;
@@ -178,7 +174,6 @@ select {
   text-align-last: center;
 }
 
-
 .modal {
   position: fixed;
   top: 0;
@@ -207,7 +202,6 @@ select {
   text-align: center;
   position: relative;
 }
-
 
 .modal-content h2 {
   margin-top: 0;
@@ -277,7 +271,6 @@ select {
   border: 1px solid #00ffff;
 }
 
-
 footer {
   position: fixed;
   left: 300px;
@@ -288,17 +281,11 @@ footer {
   align-items: center;
   justify-content: center;
   background: transparent;
-  border-top: 1px solid #66ccff88;  /* קו הפרדה חצי שקוף */
+  border-top: 1px solid #66ccff88; 
   color: #66ccff;
   font-size: 0.9em;
   text-shadow: 0 0 8px #3399cc;
 }
-
-
-
-
-
-
 
 .error {
   color: #ff5555;
@@ -311,8 +298,8 @@ footer {
   text-align: center;
   font-weight: bold;
 }
+
 /* Game Style: */
-/* Game End Screen Style */
 #endScreen {
   position: absolute;
   top: 50%;
@@ -332,7 +319,6 @@ footer {
   backdrop-filter: blur(4px);
 }
 
-/* תוכן פנימי של מסך הסיום */
 #endContent.end-box {
   text-align: center;
   background-color: rgba(0, 0, 30, 0.95);
@@ -344,8 +330,6 @@ footer {
   margin: 0 auto;
 }
 
-
-/* הודעת ניצחון/הפסד + ציון */
 #endMessage,
 #endScore {
   color: #ffffff;
@@ -370,9 +354,6 @@ footer {
   backdrop-filter: blur(4px);
 }
 
-
-
-/* טקסטים בתוך endContent שמעל טבלת השיאים */
 #endContent.end-box h2,
 #endContent.end-box p,
 #endContent.end-box h3,
@@ -380,8 +361,6 @@ footer {
   color: #66ccff;
 }
 
-
-/* טבלת השיאים */
 #scoreHistory {
   list-style: none;
   padding: 0;
@@ -395,13 +374,12 @@ footer {
   color: #ffffff;
 }
 
-
-
 #scoreHistory li::before {
   content: "⭐ ";
   margin-right: 5px;
   color: #00ffff;
 }
+
 #scoreHistory .rank-num {
   color: #00ffff;
   font-weight: bold;
@@ -419,7 +397,6 @@ footer {
   box-shadow: 0 0 10px #ffd700aa;
   transform: scale(1.02);
 }
-
 
 #endScreen button {
   margin: 2rem auto 0 auto; 
@@ -443,14 +420,12 @@ footer {
   box-shadow: 0 0 12px #00ffff, 0 0 20px #00ffff inset;
 }
 
-
 #endScreen button:hover {
   background-color: #5aaed6;
   color: white;
   box-shadow: 0 0 10px #00ffff;
 }
 
-/* כותרת למסך המשחק */
 #game h2 {
   color: #00ffff;
   text-shadow: 0 0 2px #00ffff, 0 0 5px #00ffff;
@@ -460,7 +435,6 @@ footer {
   font-family: 'Orbitron', sans-serif;
 }
 
-/* אנימציית זוהר */
 @keyframes pulseGlow {
   0%, 100% {
     text-shadow: 0 0 8px #00ffff, 0 0 20px #00ffff;
@@ -469,8 +443,6 @@ footer {
     text-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
   }
 }
-
-
 
 #game.screen:not(.hidden) {
   display: flex;
@@ -481,7 +453,7 @@ footer {
   max-width: 860px;
   margin: auto;
   padding: 10px;
-  box-shadow: none; /* ביטול מסגרת נוספת */
+  box-shadow: none; 
   border: none;
 }
 
@@ -505,10 +477,9 @@ footer {
 
 .stat-block .value {
   font-size: 1.5em;
-  color: #ffffff;                /* צבע לבן */
+  color: #ffffff;               
   font-weight: bold;
 }
-
 
 /* Player Bullet */
 .player-bullet {
@@ -552,7 +523,7 @@ canvas {
   border-radius: 8px;
   border: 1px solid #00ffff;
   background-image:
-  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), /* שכבת שחור שקוף 40% */
+  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
   url('images/Base/backgroundcanvas.jpg');
   background-size: cover;
   background-position: center;
@@ -560,7 +531,6 @@ canvas {
   image-rendering: crisp-edges;
   image-rendering: pixelated;
 }
-
 
 @media (max-width: 950px) {
   #theCanvas {
